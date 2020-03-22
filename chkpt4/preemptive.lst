@@ -1,0 +1,742 @@
+                                      1 ;--------------------------------------------------------
+                                      2 ; File Created by SDCC : free open source ANSI-C Compiler
+                                      3 ; Version 3.5.0 #9253 (Apr  3 2018) (Linux)
+                                      4 ; This file was generated Wed Dec 11 18:49:39 2019
+                                      5 ;--------------------------------------------------------
+                                      6 	.module preemptive
+                                      7 	.optsdcc -mmcs51 --model-small
+                                      8 	
+                                      9 ;--------------------------------------------------------
+                                     10 ; Public variables in this module
+                                     11 ;--------------------------------------------------------
+                                     12 	.globl _Bootstrap
+                                     13 	.globl _main
+                                     14 	.globl _CY
+                                     15 	.globl _AC
+                                     16 	.globl _F0
+                                     17 	.globl _RS1
+                                     18 	.globl _RS0
+                                     19 	.globl _OV
+                                     20 	.globl _F1
+                                     21 	.globl _P
+                                     22 	.globl _PS
+                                     23 	.globl _PT1
+                                     24 	.globl _PX1
+                                     25 	.globl _PT0
+                                     26 	.globl _PX0
+                                     27 	.globl _RD
+                                     28 	.globl _WR
+                                     29 	.globl _T1
+                                     30 	.globl _T0
+                                     31 	.globl _INT1
+                                     32 	.globl _INT0
+                                     33 	.globl _TXD
+                                     34 	.globl _RXD
+                                     35 	.globl _P3_7
+                                     36 	.globl _P3_6
+                                     37 	.globl _P3_5
+                                     38 	.globl _P3_4
+                                     39 	.globl _P3_3
+                                     40 	.globl _P3_2
+                                     41 	.globl _P3_1
+                                     42 	.globl _P3_0
+                                     43 	.globl _EA
+                                     44 	.globl _ES
+                                     45 	.globl _ET1
+                                     46 	.globl _EX1
+                                     47 	.globl _ET0
+                                     48 	.globl _EX0
+                                     49 	.globl _P2_7
+                                     50 	.globl _P2_6
+                                     51 	.globl _P2_5
+                                     52 	.globl _P2_4
+                                     53 	.globl _P2_3
+                                     54 	.globl _P2_2
+                                     55 	.globl _P2_1
+                                     56 	.globl _P2_0
+                                     57 	.globl _SM0
+                                     58 	.globl _SM1
+                                     59 	.globl _SM2
+                                     60 	.globl _REN
+                                     61 	.globl _TB8
+                                     62 	.globl _RB8
+                                     63 	.globl _TI
+                                     64 	.globl _RI
+                                     65 	.globl _P1_7
+                                     66 	.globl _P1_6
+                                     67 	.globl _P1_5
+                                     68 	.globl _P1_4
+                                     69 	.globl _P1_3
+                                     70 	.globl _P1_2
+                                     71 	.globl _P1_1
+                                     72 	.globl _P1_0
+                                     73 	.globl _TF1
+                                     74 	.globl _TR1
+                                     75 	.globl _TF0
+                                     76 	.globl _TR0
+                                     77 	.globl _IE1
+                                     78 	.globl _IT1
+                                     79 	.globl _IE0
+                                     80 	.globl _IT0
+                                     81 	.globl _P0_7
+                                     82 	.globl _P0_6
+                                     83 	.globl _P0_5
+                                     84 	.globl _P0_4
+                                     85 	.globl _P0_3
+                                     86 	.globl _P0_2
+                                     87 	.globl _P0_1
+                                     88 	.globl _P0_0
+                                     89 	.globl _B
+                                     90 	.globl _ACC
+                                     91 	.globl _PSW
+                                     92 	.globl _IP
+                                     93 	.globl _P3
+                                     94 	.globl _IE
+                                     95 	.globl _P2
+                                     96 	.globl _SBUF
+                                     97 	.globl _SCON
+                                     98 	.globl _P1
+                                     99 	.globl _TH1
+                                    100 	.globl _TH0
+                                    101 	.globl _TL1
+                                    102 	.globl _TL0
+                                    103 	.globl _TMOD
+                                    104 	.globl _TCON
+                                    105 	.globl _PCON
+                                    106 	.globl _DPH
+                                    107 	.globl _DPL
+                                    108 	.globl _SP
+                                    109 	.globl _P0
+                                    110 	.globl _ThreadCreate
+                                    111 	.globl _ThreadYield
+                                    112 	.globl _ThreadExit
+                                    113 	.globl _myTimer0Handler
+                                    114 ;--------------------------------------------------------
+                                    115 ; special function registers
+                                    116 ;--------------------------------------------------------
+                                    117 	.area RSEG    (ABS,DATA)
+      000000                        118 	.org 0x0000
+                           000080   119 _P0	=	0x0080
+                           000081   120 _SP	=	0x0081
+                           000082   121 _DPL	=	0x0082
+                           000083   122 _DPH	=	0x0083
+                           000087   123 _PCON	=	0x0087
+                           000088   124 _TCON	=	0x0088
+                           000089   125 _TMOD	=	0x0089
+                           00008A   126 _TL0	=	0x008a
+                           00008B   127 _TL1	=	0x008b
+                           00008C   128 _TH0	=	0x008c
+                           00008D   129 _TH1	=	0x008d
+                           000090   130 _P1	=	0x0090
+                           000098   131 _SCON	=	0x0098
+                           000099   132 _SBUF	=	0x0099
+                           0000A0   133 _P2	=	0x00a0
+                           0000A8   134 _IE	=	0x00a8
+                           0000B0   135 _P3	=	0x00b0
+                           0000B8   136 _IP	=	0x00b8
+                           0000D0   137 _PSW	=	0x00d0
+                           0000E0   138 _ACC	=	0x00e0
+                           0000F0   139 _B	=	0x00f0
+                                    140 ;--------------------------------------------------------
+                                    141 ; special function bits
+                                    142 ;--------------------------------------------------------
+                                    143 	.area RSEG    (ABS,DATA)
+      000000                        144 	.org 0x0000
+                           000080   145 _P0_0	=	0x0080
+                           000081   146 _P0_1	=	0x0081
+                           000082   147 _P0_2	=	0x0082
+                           000083   148 _P0_3	=	0x0083
+                           000084   149 _P0_4	=	0x0084
+                           000085   150 _P0_5	=	0x0085
+                           000086   151 _P0_6	=	0x0086
+                           000087   152 _P0_7	=	0x0087
+                           000088   153 _IT0	=	0x0088
+                           000089   154 _IE0	=	0x0089
+                           00008A   155 _IT1	=	0x008a
+                           00008B   156 _IE1	=	0x008b
+                           00008C   157 _TR0	=	0x008c
+                           00008D   158 _TF0	=	0x008d
+                           00008E   159 _TR1	=	0x008e
+                           00008F   160 _TF1	=	0x008f
+                           000090   161 _P1_0	=	0x0090
+                           000091   162 _P1_1	=	0x0091
+                           000092   163 _P1_2	=	0x0092
+                           000093   164 _P1_3	=	0x0093
+                           000094   165 _P1_4	=	0x0094
+                           000095   166 _P1_5	=	0x0095
+                           000096   167 _P1_6	=	0x0096
+                           000097   168 _P1_7	=	0x0097
+                           000098   169 _RI	=	0x0098
+                           000099   170 _TI	=	0x0099
+                           00009A   171 _RB8	=	0x009a
+                           00009B   172 _TB8	=	0x009b
+                           00009C   173 _REN	=	0x009c
+                           00009D   174 _SM2	=	0x009d
+                           00009E   175 _SM1	=	0x009e
+                           00009F   176 _SM0	=	0x009f
+                           0000A0   177 _P2_0	=	0x00a0
+                           0000A1   178 _P2_1	=	0x00a1
+                           0000A2   179 _P2_2	=	0x00a2
+                           0000A3   180 _P2_3	=	0x00a3
+                           0000A4   181 _P2_4	=	0x00a4
+                           0000A5   182 _P2_5	=	0x00a5
+                           0000A6   183 _P2_6	=	0x00a6
+                           0000A7   184 _P2_7	=	0x00a7
+                           0000A8   185 _EX0	=	0x00a8
+                           0000A9   186 _ET0	=	0x00a9
+                           0000AA   187 _EX1	=	0x00aa
+                           0000AB   188 _ET1	=	0x00ab
+                           0000AC   189 _ES	=	0x00ac
+                           0000AF   190 _EA	=	0x00af
+                           0000B0   191 _P3_0	=	0x00b0
+                           0000B1   192 _P3_1	=	0x00b1
+                           0000B2   193 _P3_2	=	0x00b2
+                           0000B3   194 _P3_3	=	0x00b3
+                           0000B4   195 _P3_4	=	0x00b4
+                           0000B5   196 _P3_5	=	0x00b5
+                           0000B6   197 _P3_6	=	0x00b6
+                           0000B7   198 _P3_7	=	0x00b7
+                           0000B0   199 _RXD	=	0x00b0
+                           0000B1   200 _TXD	=	0x00b1
+                           0000B2   201 _INT0	=	0x00b2
+                           0000B3   202 _INT1	=	0x00b3
+                           0000B4   203 _T0	=	0x00b4
+                           0000B5   204 _T1	=	0x00b5
+                           0000B6   205 _WR	=	0x00b6
+                           0000B7   206 _RD	=	0x00b7
+                           0000B8   207 _PX0	=	0x00b8
+                           0000B9   208 _PT0	=	0x00b9
+                           0000BA   209 _PX1	=	0x00ba
+                           0000BB   210 _PT1	=	0x00bb
+                           0000BC   211 _PS	=	0x00bc
+                           0000D0   212 _P	=	0x00d0
+                           0000D1   213 _F1	=	0x00d1
+                           0000D2   214 _OV	=	0x00d2
+                           0000D3   215 _RS0	=	0x00d3
+                           0000D4   216 _RS1	=	0x00d4
+                           0000D5   217 _F0	=	0x00d5
+                           0000D6   218 _AC	=	0x00d6
+                           0000D7   219 _CY	=	0x00d7
+                                    220 ;--------------------------------------------------------
+                                    221 ; overlayable register banks
+                                    222 ;--------------------------------------------------------
+                                    223 	.area REG_BANK_0	(REL,OVR,DATA)
+      000000                        224 	.ds 8
+                                    225 ;--------------------------------------------------------
+                                    226 ; internal ram data
+                                    227 ;--------------------------------------------------------
+                                    228 	.area DSEG    (DATA)
+                           000020   229 _SP_saved	=	0x0020
+                           000024   230 _thread_id	=	0x0024
+                           000025   231 _thread_bm	=	0x0025
+                           000026   232 _thread_ct	=	0x0026
+                           000027   233 _i	=	0x0027
+                           000028   234 _tmp	=	0x0028
+                           000029   235 _tmp2	=	0x0029
+                           00002A   236 _last_thread	=	0x002a
+                           00002B   237 _dir	=	0x002b
+                                    238 ;--------------------------------------------------------
+                                    239 ; overlayable items in internal ram 
+                                    240 ;--------------------------------------------------------
+                                    241 	.area	OSEG    (OVR,DATA)
+                                    242 ;--------------------------------------------------------
+                                    243 ; indirectly addressable internal ram data
+                                    244 ;--------------------------------------------------------
+                                    245 	.area ISEG    (DATA)
+                                    246 ;--------------------------------------------------------
+                                    247 ; absolute internal ram data
+                                    248 ;--------------------------------------------------------
+                                    249 	.area IABS    (ABS,DATA)
+                                    250 	.area IABS    (ABS,DATA)
+                                    251 ;--------------------------------------------------------
+                                    252 ; bit data
+                                    253 ;--------------------------------------------------------
+                                    254 	.area BSEG    (BIT)
+                                    255 ;--------------------------------------------------------
+                                    256 ; paged external ram data
+                                    257 ;--------------------------------------------------------
+                                    258 	.area PSEG    (PAG,XDATA)
+                                    259 ;--------------------------------------------------------
+                                    260 ; external ram data
+                                    261 ;--------------------------------------------------------
+                                    262 	.area XSEG    (XDATA)
+                                    263 ;--------------------------------------------------------
+                                    264 ; absolute external ram data
+                                    265 ;--------------------------------------------------------
+                                    266 	.area XABS    (ABS,XDATA)
+                                    267 ;--------------------------------------------------------
+                                    268 ; external initialized ram data
+                                    269 ;--------------------------------------------------------
+                                    270 	.area XISEG   (XDATA)
+                                    271 	.area HOME    (CODE)
+                                    272 	.area GSINIT0 (CODE)
+                                    273 	.area GSINIT1 (CODE)
+                                    274 	.area GSINIT2 (CODE)
+                                    275 	.area GSINIT3 (CODE)
+                                    276 	.area GSINIT4 (CODE)
+                                    277 	.area GSINIT5 (CODE)
+                                    278 	.area GSINIT  (CODE)
+                                    279 	.area GSFINAL (CODE)
+                                    280 	.area CSEG    (CODE)
+                                    281 ;--------------------------------------------------------
+                                    282 ; global & static initialisations
+                                    283 ;--------------------------------------------------------
+                                    284 	.area HOME    (CODE)
+                                    285 	.area GSINIT  (CODE)
+                                    286 	.area GSFINAL (CODE)
+                                    287 	.area GSINIT  (CODE)
+                                    288 ;--------------------------------------------------------
+                                    289 ; Home
+                                    290 ;--------------------------------------------------------
+                                    291 	.area HOME    (CODE)
+                                    292 	.area HOME    (CODE)
+                                    293 ;--------------------------------------------------------
+                                    294 ; code
+                                    295 ;--------------------------------------------------------
+                                    296 	.area CSEG    (CODE)
+                                    297 ;------------------------------------------------------------
+                                    298 ;Allocation info for local variables in function 'Bootstrap'
+                                    299 ;------------------------------------------------------------
+                                    300 ;	preemptive.c:44: void Bootstrap(void)
+                                    301 ;	-----------------------------------------
+                                    302 ;	 function Bootstrap
+                                    303 ;	-----------------------------------------
+      000000                        304 _Bootstrap:
+                           000007   305 	ar7 = 0x07
+                           000006   306 	ar6 = 0x06
+                           000005   307 	ar5 = 0x05
+                           000004   308 	ar4 = 0x04
+                           000003   309 	ar3 = 0x03
+                           000002   310 	ar2 = 0x02
+                           000001   311 	ar1 = 0x01
+                           000000   312 	ar0 = 0x00
+                                    313 ;	preemptive.c:48: __endasm;
+      000000 75 AF 00         [24]  314 	MOV _EA, #0
+                                    315 ;	preemptive.c:50: SP_saved[0] = 0x3f;
+      000003 75 20 3F         [24]  316 	mov	_SP_saved,#0x3F
+                                    317 ;	preemptive.c:51: SP_saved[1] = 0x4f;
+      000006 75 21 4F         [24]  318 	mov	(_SP_saved + 0x0001),#0x4F
+                                    319 ;	preemptive.c:52: SP_saved[2] = 0x5f;
+      000009 75 22 5F         [24]  320 	mov	(_SP_saved + 0x0002),#0x5F
+                                    321 ;	preemptive.c:53: SP_saved[3] = 0x6f;
+      00000C 75 23 6F         [24]  322 	mov	(_SP_saved + 0x0003),#0x6F
+                                    323 ;	preemptive.c:54: thread_bm = 0;
+      00000F 75 25 00         [24]  324 	mov	_thread_bm,#0x00
+                                    325 ;	preemptive.c:55: thread_id = -1;
+      000012 75 24 FF         [24]  326 	mov	_thread_id,#0xFF
+                                    327 ;	preemptive.c:56: thread_ct = 0;
+      000015 75 26 00         [24]  328 	mov	_thread_ct,#0x00
+                                    329 ;	preemptive.c:58: TMOD = 0;
+      000018 75 89 00         [24]  330 	mov	_TMOD,#0x00
+                                    331 ;	preemptive.c:59: IE = 0x82;
+      00001B 75 A8 82         [24]  332 	mov	_IE,#0x82
+                                    333 ;	preemptive.c:60: TR0 = 1;
+      00001E D2 8C            [12]  334 	setb	_TR0
+                                    335 ;	preemptive.c:61: PSW = 0;
+      000020 75 D0 00         [24]  336 	mov	_PSW,#0x00
+                                    337 ;	preemptive.c:64: thread_id = ThreadCreate(&main);
+      000023 90r00r00         [24]  338 	mov	dptr,#_main
+      000026 12r00r44         [24]  339 	lcall	_ThreadCreate
+      000029 85 82 24         [24]  340 	mov	_thread_id,dpl
+                                    341 ;	preemptive.c:66: last_thread = 0;
+      00002C 75 2A 00         [24]  342 	mov	_last_thread,#0x00
+                                    343 ;	preemptive.c:68: RESTORESTATE;
+      00002F E5 24            [12]  344 	mov	a,_thread_id
+      000031 24 20            [12]  345 	add	a,#_SP_saved
+      000033 F9               [12]  346 	mov	r1,a
+      000034 87 81            [24]  347 	mov	_SP,@r1
+      000036 D0 D0            [24]  348 	POP PSW 
+      000038 D0 83            [24]  349 	POP DPH 
+      00003A D0 82            [24]  350 	POP DPL 
+      00003C D0 F0            [24]  351 	POP B 
+      00003E D0 E0            [24]  352 	POP ACC 
+                                    353 ;	preemptive.c:72: __endasm;
+      000040 75 AF 01         [24]  354 	MOV _EA, #1
+      000043 22               [24]  355 	ret
+                                    356 ;------------------------------------------------------------
+                                    357 ;Allocation info for local variables in function 'ThreadCreate'
+                                    358 ;------------------------------------------------------------
+                                    359 ;fp                        Allocated to registers 
+                                    360 ;------------------------------------------------------------
+                                    361 ;	preemptive.c:74: ThreadID ThreadCreate(FunctionPtr fp)
+                                    362 ;	-----------------------------------------
+                                    363 ;	 function ThreadCreate
+                                    364 ;	-----------------------------------------
+      000044                        365 _ThreadCreate:
+                                    366 ;	preemptive.c:78: __endasm;
+      000044 75 AF 00         [24]  367 	MOV _EA, #0
+                                    368 ;	preemptive.c:80: if(thread_ct >= MAXTHREADS){
+      000047 C3               [12]  369 	clr	c
+      000048 E5 26            [12]  370 	mov	a,_thread_ct
+      00004A 64 80            [12]  371 	xrl	a,#0x80
+      00004C 94 83            [12]  372 	subb	a,#0x83
+      00004E 40 07            [24]  373 	jc	00105$
+                                    374 ;	preemptive.c:83: __endasm;
+      000050 75 AF 01         [24]  375 	MOV _EA, #1
+                                    376 ;	preemptive.c:85: return -1;
+      000053 75 82 FF         [24]  377 	mov	dpl,#0xFF
+      000056 22               [24]  378 	ret
+      000057                        379 00105$:
+                                    380 ;	preemptive.c:88: for(i = 0; i < MAXTHREADS; i++){
+      000057 75 27 00         [24]  381 	mov	_i,#0x00
+      00005A                        382 00108$:
+      00005A C3               [12]  383 	clr	c
+      00005B E5 27            [12]  384 	mov	a,_i
+      00005D 64 80            [12]  385 	xrl	a,#0x80
+      00005F 94 83            [12]  386 	subb	a,#0x83
+      000061 50 57            [24]  387 	jnc	00103$
+                                    388 ;	preemptive.c:89: tmp = 1 << i;
+      000063 85 27 F0         [24]  389 	mov	b,_i
+      000066 05 F0            [12]  390 	inc	b
+      000068 74 01            [12]  391 	mov	a,#0x01
+      00006A 80 02            [24]  392 	sjmp	00128$
+      00006C                        393 00126$:
+      00006C 25 E0            [12]  394 	add	a,acc
+      00006E                        395 00128$:
+      00006E D5 F0 FB         [24]  396 	djnz	b,00126$
+      000071 F5 28            [12]  397 	mov	_tmp,a
+                                    398 ;	preemptive.c:90: if( (thread_bm & tmp) == 0 ){
+      000073 E5 28            [12]  399 	mov	a,_tmp
+      000075 55 25            [12]  400 	anl	a,_thread_bm
+      000077 70 3D            [24]  401 	jnz	00109$
+                                    402 ;	preemptive.c:92: thread_bm |= tmp; // set the bit to 1
+      000079 E5 28            [12]  403 	mov	a,_tmp
+      00007B 42 25            [12]  404 	orl	_thread_bm,a
+                                    405 ;	preemptive.c:93: thread_ct++;
+      00007D 05 26            [12]  406 	inc	_thread_ct
+                                    407 ;	preemptive.c:94: tmp = SP;
+      00007F 85 81 28         [24]  408 	mov	_tmp,_SP
+                                    409 ;	preemptive.c:95: SP = SP_saved[i]; // SP for the created thread
+      000082 E5 27            [12]  410 	mov	a,_i
+      000084 24 20            [12]  411 	add	a,#_SP_saved
+      000086 F9               [12]  412 	mov	r1,a
+      000087 87 81            [24]  413 	mov	_SP,@r1
+                                    414 ;	preemptive.c:96: tmp2 = i << 3; // for PSW.3 and PSW.4
+      000089 E5 27            [12]  415 	mov	a,_i
+      00008B C4               [12]  416 	swap	a
+      00008C 03               [12]  417 	rr	a
+      00008D 54 F8            [12]  418 	anl	a,#0xF8
+      00008F F5 29            [12]  419 	mov	_tmp2,a
+                                    420 ;	preemptive.c:110: __endasm;
+      000091 74 00            [12]  421 	MOV A, #0
+      000093 C0 82            [24]  422 	PUSH DPL
+      000095 C0 83            [24]  423 	PUSH DPH
+      000097 C0 E0            [24]  424 	PUSH ACC
+      000099 C0 E0            [24]  425 	PUSH ACC
+      00009B C0 E0            [24]  426 	PUSH ACC
+      00009D C0 E0            [24]  427 	PUSH ACC
+      00009F E5 29            [12]  428 	MOV A, _tmp2
+      0000A1 C0 E0            [24]  429 	PUSH ACC
+      0000A3 74 00            [12]  430 	MOV A, #0x00
+                                    431 ;	preemptive.c:111: SP_saved[i] = SP; // save SP for that thread
+      0000A5 E5 27            [12]  432 	mov	a,_i
+      0000A7 24 20            [12]  433 	add	a,#_SP_saved
+      0000A9 F8               [12]  434 	mov	r0,a
+      0000AA A6 81            [24]  435 	mov	@r0,_SP
+                                    436 ;	preemptive.c:112: SP = tmp; // restore SP
+      0000AC 85 28 81         [24]  437 	mov	_SP,_tmp
+                                    438 ;	preemptive.c:116: __endasm;
+      0000AF 75 AF 01         [24]  439 	MOV _EA, #1
+                                    440 ;	preemptive.c:118: return i;
+      0000B2 85 27 82         [24]  441 	mov	dpl,_i
+      0000B5 22               [24]  442 	ret
+      0000B6                        443 00109$:
+                                    444 ;	preemptive.c:88: for(i = 0; i < MAXTHREADS; i++){
+      0000B6 05 27            [12]  445 	inc	_i
+      0000B8 80 A0            [24]  446 	sjmp	00108$
+      0000BA                        447 00103$:
+                                    448 ;	preemptive.c:123: __endasm;
+      0000BA 75 AF 01         [24]  449 	MOV _EA, #1
+                                    450 ;	preemptive.c:124: return -1;
+      0000BD 75 82 FF         [24]  451 	mov	dpl,#0xFF
+      0000C0 22               [24]  452 	ret
+                                    453 ;------------------------------------------------------------
+                                    454 ;Allocation info for local variables in function 'ThreadYield'
+                                    455 ;------------------------------------------------------------
+                                    456 ;	preemptive.c:127: void ThreadYield(void)
+                                    457 ;	-----------------------------------------
+                                    458 ;	 function ThreadYield
+                                    459 ;	-----------------------------------------
+      0000C1                        460 _ThreadYield:
+                                    461 ;	preemptive.c:131: __endasm;
+      0000C1 75 AF 00         [24]  462 	MOV _EA, #0
+                                    463 ;	preemptive.c:132: SAVESTATE;
+      0000C4 C0 E0            [24]  464 	PUSH ACC 
+      0000C6 C0 F0            [24]  465 	PUSH B 
+      0000C8 C0 82            [24]  466 	PUSH DPL 
+      0000CA C0 83            [24]  467 	PUSH DPH 
+      0000CC C0 D0            [24]  468 	PUSH PSW 
+      0000CE E5 24            [12]  469 	mov	a,_thread_id
+      0000D0 24 20            [12]  470 	add	a,#_SP_saved
+      0000D2 F8               [12]  471 	mov	r0,a
+      0000D3 A6 81            [24]  472 	mov	@r0,_SP
+                                    473 ;	preemptive.c:133: for(i = 1; i <= MAXTHREADS; i++){ // start from next thread
+      0000D5 75 27 01         [24]  474 	mov	_i,#0x01
+      0000D8                        475 00105$:
+      0000D8 C3               [12]  476 	clr	c
+      0000D9 74 83            [12]  477 	mov	a,#(0x03 ^ 0x80)
+      0000DB 85 27 F0         [24]  478 	mov	b,_i
+      0000DE 63 F0 80         [24]  479 	xrl	b,#0x80
+      0000E1 95 F0            [12]  480 	subb	a,b
+      0000E3 40 58            [24]  481 	jc	00103$
+                                    482 ;	preemptive.c:134: tmp = thread_id + i;
+      0000E5 E5 27            [12]  483 	mov	a,_i
+      0000E7 25 24            [12]  484 	add	a,_thread_id
+      0000E9 F5 28            [12]  485 	mov	_tmp,a
+                                    486 ;	preemptive.c:135: tmp %= MAXTHREADS;
+      0000EB 75 F0 03         [24]  487 	mov	b,#0x03
+      0000EE E5 28            [12]  488 	mov	a,_tmp
+      0000F0 C2 D5            [12]  489 	clr	F0
+      0000F2 30 E7 04         [24]  490 	jnb	acc.7,00119$
+      0000F5 D2 D5            [12]  491 	setb	F0
+      0000F7 F4               [12]  492 	cpl	a
+      0000F8 04               [12]  493 	inc	a
+      0000F9                        494 00119$:
+      0000F9 84               [48]  495 	div	ab
+      0000FA E5 F0            [12]  496 	mov	a,b
+      0000FC 30 D5 02         [24]  497 	jnb	F0,00120$
+      0000FF F4               [12]  498 	cpl	a
+      000100 04               [12]  499 	inc	a
+      000101                        500 00120$:
+      000101 F5 28            [12]  501 	mov	_tmp,a
+                                    502 ;	preemptive.c:136: tmp = 1 << tmp;
+      000103 85 28 F0         [24]  503 	mov	b,_tmp
+      000106 05 F0            [12]  504 	inc	b
+      000108 74 01            [12]  505 	mov	a,#0x01
+      00010A 80 02            [24]  506 	sjmp	00123$
+      00010C                        507 00121$:
+      00010C 25 E0            [12]  508 	add	a,acc
+      00010E                        509 00123$:
+      00010E D5 F0 FB         [24]  510 	djnz	b,00121$
+      000111 F5 28            [12]  511 	mov	_tmp,a
+                                    512 ;	preemptive.c:137: if(thread_bm & tmp){ // next thread found
+      000113 E5 28            [12]  513 	mov	a,_tmp
+      000115 55 25            [12]  514 	anl	a,_thread_bm
+      000117 60 20            [24]  515 	jz	00106$
+                                    516 ;	preemptive.c:138: thread_id += i;
+      000119 E5 27            [12]  517 	mov	a,_i
+      00011B 25 24            [12]  518 	add	a,_thread_id
+      00011D F5 24            [12]  519 	mov	_thread_id,a
+                                    520 ;	preemptive.c:139: thread_id %= MAXTHREADS;
+      00011F 75 F0 03         [24]  521 	mov	b,#0x03
+      000122 E5 24            [12]  522 	mov	a,_thread_id
+      000124 C2 D5            [12]  523 	clr	F0
+      000126 30 E7 04         [24]  524 	jnb	acc.7,00125$
+      000129 D2 D5            [12]  525 	setb	F0
+      00012B F4               [12]  526 	cpl	a
+      00012C 04               [12]  527 	inc	a
+      00012D                        528 00125$:
+      00012D 84               [48]  529 	div	ab
+      00012E E5 F0            [12]  530 	mov	a,b
+      000130 30 D5 02         [24]  531 	jnb	F0,00126$
+      000133 F4               [12]  532 	cpl	a
+      000134 04               [12]  533 	inc	a
+      000135                        534 00126$:
+      000135 F5 24            [12]  535 	mov	_thread_id,a
+                                    536 ;	preemptive.c:140: break;
+      000137 80 04            [24]  537 	sjmp	00103$
+      000139                        538 00106$:
+                                    539 ;	preemptive.c:133: for(i = 1; i <= MAXTHREADS; i++){ // start from next thread
+      000139 05 27            [12]  540 	inc	_i
+      00013B 80 9B            [24]  541 	sjmp	00105$
+      00013D                        542 00103$:
+                                    543 ;	preemptive.c:143: RESTORESTATE;
+      00013D E5 24            [12]  544 	mov	a,_thread_id
+      00013F 24 20            [12]  545 	add	a,#_SP_saved
+      000141 F9               [12]  546 	mov	r1,a
+      000142 87 81            [24]  547 	mov	_SP,@r1
+      000144 D0 D0            [24]  548 	POP PSW 
+      000146 D0 83            [24]  549 	POP DPH 
+      000148 D0 82            [24]  550 	POP DPL 
+      00014A D0 F0            [24]  551 	POP B 
+      00014C D0 E0            [24]  552 	POP ACC 
+                                    553 ;	preemptive.c:146: __endasm;
+      00014E 75 AF 01         [24]  554 	MOV _EA, #1
+      000151 22               [24]  555 	ret
+                                    556 ;------------------------------------------------------------
+                                    557 ;Allocation info for local variables in function 'ThreadExit'
+                                    558 ;------------------------------------------------------------
+                                    559 ;	preemptive.c:148: void ThreadExit(void)
+                                    560 ;	-----------------------------------------
+                                    561 ;	 function ThreadExit
+                                    562 ;	-----------------------------------------
+      000152                        563 _ThreadExit:
+                                    564 ;	preemptive.c:152: __endasm;
+      000152 75 AF 00         [24]  565 	MOV _EA, #0
+                                    566 ;	preemptive.c:153: tmp = 1 << thread_id;
+      000155 85 24 F0         [24]  567 	mov	b,_thread_id
+      000158 05 F0            [12]  568 	inc	b
+      00015A 74 01            [12]  569 	mov	a,#0x01
+      00015C 80 02            [24]  570 	sjmp	00105$
+      00015E                        571 00103$:
+      00015E 25 E0            [12]  572 	add	a,acc
+      000160                        573 00105$:
+      000160 D5 F0 FB         [24]  574 	djnz	b,00103$
+      000163 F5 28            [12]  575 	mov	_tmp,a
+                                    576 ;	preemptive.c:154: tmp = ~tmp;
+      000165 E5 28            [12]  577 	mov	a,_tmp
+      000167 F4               [12]  578 	cpl	a
+      000168 F5 28            [12]  579 	mov	_tmp,a
+                                    580 ;	preemptive.c:155: thread_bm &= tmp; // clear bitmap
+      00016A E5 28            [12]  581 	mov	a,_tmp
+      00016C 52 25            [12]  582 	anl	_thread_bm,a
+                                    583 ;	preemptive.c:156: thread_ct--;
+      00016E 15 26            [12]  584 	dec	_thread_ct
+                                    585 ;	preemptive.c:157: ThreadYield();
+      000170 12r00rC1         [24]  586 	lcall	_ThreadYield
+                                    587 ;	preemptive.c:160: __endasm;
+      000173 75 AF 01         [24]  588 	MOV _EA, #1
+      000176 22               [24]  589 	ret
+                                    590 ;------------------------------------------------------------
+                                    591 ;Allocation info for local variables in function 'myTimer0Handler'
+                                    592 ;------------------------------------------------------------
+                                    593 ;	preemptive.c:163: void myTimer0Handler(void)
+                                    594 ;	-----------------------------------------
+                                    595 ;	 function myTimer0Handler
+                                    596 ;	-----------------------------------------
+      000177                        597 _myTimer0Handler:
+                                    598 ;	preemptive.c:167: __endasm;
+      000177 75 AF 00         [24]  599 	MOV _EA, #0
+                                    600 ;	preemptive.c:168: SAVESTATE;
+      00017A C0 E0            [24]  601 	PUSH ACC 
+      00017C C0 F0            [24]  602 	PUSH B 
+      00017E C0 82            [24]  603 	PUSH DPL 
+      000180 C0 83            [24]  604 	PUSH DPH 
+      000182 C0 D0            [24]  605 	PUSH PSW 
+      000184 E5 24            [12]  606 	mov	a,_thread_id
+      000186 24 20            [12]  607 	add	a,#_SP_saved
+      000188 F8               [12]  608 	mov	r0,a
+      000189 A6 81            [24]  609 	mov	@r0,_SP
+                                    610 ;	preemptive.c:174: __endasm;
+      00018B 75 24 03         [24]  611 	MOV _thread_id, #3
+      00018E 75 D0 18         [24]  612 	MOV _PSW, #24
+                                    613 ;	preemptive.c:178: if(last_thread == 0){
+      000191 E5 2A            [12]  614 	mov	a,_last_thread
+      000193 70 09            [24]  615 	jnz	00102$
+                                    616 ;	preemptive.c:179: dir = !dir;
+      000195 E5 2B            [12]  617 	mov	a,_dir
+      000197 B4 01 00         [24]  618 	cjne	a,#0x01,00136$
+      00019A                        619 00136$:
+      00019A E4               [12]  620 	clr	a
+      00019B 33               [12]  621 	rlc	a
+      00019C F5 2B            [12]  622 	mov	_dir,a
+      00019E                        623 00102$:
+                                    624 ;	preemptive.c:181: SP = SP_saved[3];
+      00019E 85 23 81         [24]  625 	mov	_SP,(_SP_saved + 0x0003)
+                                    626 ;	preemptive.c:182: for(i = 1; i <= MAXTHREADS; i++){ // start from next thread
+      0001A1 75 27 01         [24]  627 	mov	_i,#0x01
+      0001A4                        628 00113$:
+      0001A4 C3               [12]  629 	clr	c
+      0001A5 74 83            [12]  630 	mov	a,#(0x03 ^ 0x80)
+      0001A7 85 27 F0         [24]  631 	mov	b,_i
+      0001AA 63 F0 80         [24]  632 	xrl	b,#0x80
+      0001AD 95 F0            [12]  633 	subb	a,b
+      0001AF 40 77            [24]  634 	jc	00111$
+                                    635 ;	preemptive.c:183: if(dir){
+      0001B1 E5 2B            [12]  636 	mov	a,_dir
+      0001B3 60 08            [24]  637 	jz	00104$
+                                    638 ;	preemptive.c:184: tmp2 = (last_thread + i);
+      0001B5 E5 27            [12]  639 	mov	a,_i
+      0001B7 25 2A            [12]  640 	add	a,_last_thread
+      0001B9 F5 29            [12]  641 	mov	_tmp2,a
+      0001BB 80 09            [24]  642 	sjmp	00105$
+      0001BD                        643 00104$:
+                                    644 ;	preemptive.c:188: tmp2 = last_thread + (MAXTHREADS - i);
+      0001BD 74 03            [12]  645 	mov	a,#0x03
+      0001BF C3               [12]  646 	clr	c
+      0001C0 95 27            [12]  647 	subb	a,_i
+      0001C2 25 2A            [12]  648 	add	a,_last_thread
+      0001C4 F5 29            [12]  649 	mov	_tmp2,a
+      0001C6                        650 00105$:
+                                    651 ;	preemptive.c:191: tmp2 %= MAXTHREADS;
+      0001C6 75 F0 03         [24]  652 	mov	b,#0x03
+      0001C9 E5 29            [12]  653 	mov	a,_tmp2
+      0001CB C2 D5            [12]  654 	clr	F0
+      0001CD 30 E7 04         [24]  655 	jnb	acc.7,00139$
+      0001D0 D2 D5            [12]  656 	setb	F0
+      0001D2 F4               [12]  657 	cpl	a
+      0001D3 04               [12]  658 	inc	a
+      0001D4                        659 00139$:
+      0001D4 84               [48]  660 	div	ab
+      0001D5 E5 F0            [12]  661 	mov	a,b
+      0001D7 30 D5 02         [24]  662 	jnb	F0,00140$
+      0001DA F4               [12]  663 	cpl	a
+      0001DB 04               [12]  664 	inc	a
+      0001DC                        665 00140$:
+      0001DC F5 29            [12]  666 	mov	_tmp2,a
+                                    667 ;	preemptive.c:192: tmp2 = 1 << tmp2;
+      0001DE 85 29 F0         [24]  668 	mov	b,_tmp2
+      0001E1 05 F0            [12]  669 	inc	b
+      0001E3 74 01            [12]  670 	mov	a,#0x01
+      0001E5 80 02            [24]  671 	sjmp	00143$
+      0001E7                        672 00141$:
+      0001E7 25 E0            [12]  673 	add	a,acc
+      0001E9                        674 00143$:
+      0001E9 D5 F0 FB         [24]  675 	djnz	b,00141$
+      0001EC F5 29            [12]  676 	mov	_tmp2,a
+                                    677 ;	preemptive.c:193: if( thread_bm & tmp2){ // next thread found
+      0001EE E5 29            [12]  678 	mov	a,_tmp2
+      0001F0 55 25            [12]  679 	anl	a,_thread_bm
+      0001F2 60 2F            [24]  680 	jz	00114$
+                                    681 ;	preemptive.c:194: if(dir){
+      0001F4 E5 2B            [12]  682 	mov	a,_dir
+      0001F6 60 08            [24]  683 	jz	00107$
+                                    684 ;	preemptive.c:195: tmp = last_thread + i;
+      0001F8 E5 27            [12]  685 	mov	a,_i
+      0001FA 25 2A            [12]  686 	add	a,_last_thread
+      0001FC F5 28            [12]  687 	mov	_tmp,a
+      0001FE 80 09            [24]  688 	sjmp	00108$
+      000200                        689 00107$:
+                                    690 ;	preemptive.c:198: tmp = last_thread + (MAXTHREADS - i);
+      000200 74 03            [12]  691 	mov	a,#0x03
+      000202 C3               [12]  692 	clr	c
+      000203 95 27            [12]  693 	subb	a,_i
+      000205 25 2A            [12]  694 	add	a,_last_thread
+      000207 F5 28            [12]  695 	mov	_tmp,a
+      000209                        696 00108$:
+                                    697 ;	preemptive.c:200: tmp %= MAXTHREADS;
+      000209 75 F0 03         [24]  698 	mov	b,#0x03
+      00020C E5 28            [12]  699 	mov	a,_tmp
+      00020E C2 D5            [12]  700 	clr	F0
+      000210 30 E7 04         [24]  701 	jnb	acc.7,00146$
+      000213 D2 D5            [12]  702 	setb	F0
+      000215 F4               [12]  703 	cpl	a
+      000216 04               [12]  704 	inc	a
+      000217                        705 00146$:
+      000217 84               [48]  706 	div	ab
+      000218 E5 F0            [12]  707 	mov	a,b
+      00021A 30 D5 02         [24]  708 	jnb	F0,00147$
+      00021D F4               [12]  709 	cpl	a
+      00021E 04               [12]  710 	inc	a
+      00021F                        711 00147$:
+      00021F F5 28            [12]  712 	mov	_tmp,a
+                                    713 ;	preemptive.c:201: break;
+      000221 80 05            [24]  714 	sjmp	00111$
+      000223                        715 00114$:
+                                    716 ;	preemptive.c:182: for(i = 1; i <= MAXTHREADS; i++){ // start from next thread
+      000223 05 27            [12]  717 	inc	_i
+      000225 02r01rA4         [24]  718 	ljmp	00113$
+      000228                        719 00111$:
+                                    720 ;	preemptive.c:204: last_thread = tmp;
+      000228 85 28 2A         [24]  721 	mov	_last_thread,_tmp
+                                    722 ;	preemptive.c:205: thread_id = last_thread;
+      00022B 85 2A 24         [24]  723 	mov	_thread_id,_last_thread
+                                    724 ;	preemptive.c:207: RESTORESTATE;
+      00022E E5 24            [12]  725 	mov	a,_thread_id
+      000230 24 20            [12]  726 	add	a,#_SP_saved
+      000232 F9               [12]  727 	mov	r1,a
+      000233 87 81            [24]  728 	mov	_SP,@r1
+      000235 D0 D0            [24]  729 	POP PSW 
+      000237 D0 83            [24]  730 	POP DPH 
+      000239 D0 82            [24]  731 	POP DPL 
+      00023B D0 F0            [24]  732 	POP B 
+      00023D D0 E0            [24]  733 	POP ACC 
+                                    734 ;	preemptive.c:210: __endasm;
+      00023F 75 AF 01         [24]  735 	MOV _EA, #1
+                                    736 ;	preemptive.c:214: __endasm;
+      000242 32               [24]  737 	RETI
+      000243 22               [24]  738 	ret
+                                    739 	.area CSEG    (CODE)
+                                    740 	.area CONST   (CODE)
+                                    741 	.area XINIT   (CODE)
+                                    742 	.area CABS    (ABS,CODE)

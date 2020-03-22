@@ -1,0 +1,1312 @@
+                                      1 ;--------------------------------------------------------
+                                      2 ; File Created by SDCC : free open source ANSI-C Compiler
+                                      3 ; Version 3.5.0 #9253 (Apr  3 2018) (Linux)
+                                      4 ; This file was generated Wed Jan 15 13:09:18 2020
+                                      5 ;--------------------------------------------------------
+                                      6 	.module testparking
+                                      7 	.optsdcc -mmcs51 --model-small
+                                      8 	
+                                      9 ;--------------------------------------------------------
+                                     10 ; Public variables in this module
+                                     11 ;--------------------------------------------------------
+                                     12 	.globl __mcs51_genXRAMCLEAR
+                                     13 	.globl __mcs51_genXINIT
+                                     14 	.globl __mcs51_genRAMCLEAR
+                                     15 	.globl __sdcc_gsinit_startup
+                                     16 	.globl _main
+                                     17 	.globl _timer0_ISR
+                                     18 	.globl _delay
+                                     19 	.globl _ThreadCreate
+                                     20 	.globl _CY
+                                     21 	.globl _AC
+                                     22 	.globl _F0
+                                     23 	.globl _RS1
+                                     24 	.globl _RS0
+                                     25 	.globl _OV
+                                     26 	.globl _F1
+                                     27 	.globl _P
+                                     28 	.globl _PS
+                                     29 	.globl _PT1
+                                     30 	.globl _PX1
+                                     31 	.globl _PT0
+                                     32 	.globl _PX0
+                                     33 	.globl _RD
+                                     34 	.globl _WR
+                                     35 	.globl _T1
+                                     36 	.globl _T0
+                                     37 	.globl _INT1
+                                     38 	.globl _INT0
+                                     39 	.globl _TXD
+                                     40 	.globl _RXD
+                                     41 	.globl _P3_7
+                                     42 	.globl _P3_6
+                                     43 	.globl _P3_5
+                                     44 	.globl _P3_4
+                                     45 	.globl _P3_3
+                                     46 	.globl _P3_2
+                                     47 	.globl _P3_1
+                                     48 	.globl _P3_0
+                                     49 	.globl _EA
+                                     50 	.globl _ES
+                                     51 	.globl _ET1
+                                     52 	.globl _EX1
+                                     53 	.globl _ET0
+                                     54 	.globl _EX0
+                                     55 	.globl _P2_7
+                                     56 	.globl _P2_6
+                                     57 	.globl _P2_5
+                                     58 	.globl _P2_4
+                                     59 	.globl _P2_3
+                                     60 	.globl _P2_2
+                                     61 	.globl _P2_1
+                                     62 	.globl _P2_0
+                                     63 	.globl _SM0
+                                     64 	.globl _SM1
+                                     65 	.globl _SM2
+                                     66 	.globl _REN
+                                     67 	.globl _TB8
+                                     68 	.globl _RB8
+                                     69 	.globl _TI
+                                     70 	.globl _RI
+                                     71 	.globl _P1_7
+                                     72 	.globl _P1_6
+                                     73 	.globl _P1_5
+                                     74 	.globl _P1_4
+                                     75 	.globl _P1_3
+                                     76 	.globl _P1_2
+                                     77 	.globl _P1_1
+                                     78 	.globl _P1_0
+                                     79 	.globl _TF1
+                                     80 	.globl _TR1
+                                     81 	.globl _TF0
+                                     82 	.globl _TR0
+                                     83 	.globl _IE1
+                                     84 	.globl _IT1
+                                     85 	.globl _IE0
+                                     86 	.globl _IT0
+                                     87 	.globl _P0_7
+                                     88 	.globl _P0_6
+                                     89 	.globl _P0_5
+                                     90 	.globl _P0_4
+                                     91 	.globl _P0_3
+                                     92 	.globl _P0_2
+                                     93 	.globl _P0_1
+                                     94 	.globl _P0_0
+                                     95 	.globl _B
+                                     96 	.globl _ACC
+                                     97 	.globl _PSW
+                                     98 	.globl _IP
+                                     99 	.globl _P3
+                                    100 	.globl _IE
+                                    101 	.globl _P2
+                                    102 	.globl _SBUF
+                                    103 	.globl _SCON
+                                    104 	.globl _P1
+                                    105 	.globl _TH1
+                                    106 	.globl _TH0
+                                    107 	.globl _TL1
+                                    108 	.globl _TL0
+                                    109 	.globl _TMOD
+                                    110 	.globl _TCON
+                                    111 	.globl _PCON
+                                    112 	.globl _DPH
+                                    113 	.globl _DPL
+                                    114 	.globl _SP
+                                    115 	.globl _P0
+                                    116 	.globl _buff
+                                    117 	.globl _empty
+                                    118 	.globl _mutex
+                                    119 	.globl _slot
+                                    120 	.globl _out
+                                    121 	.globl _in
+                                    122 	.globl _spot
+                                    123 	.globl _CarA
+                                    124 	.globl _CarB
+                                    125 	.globl _CarC
+                                    126 	.globl _CarD
+                                    127 	.globl _CarE
+                                    128 ;--------------------------------------------------------
+                                    129 ; special function registers
+                                    130 ;--------------------------------------------------------
+                                    131 	.area RSEG    (ABS,DATA)
+      000000                        132 	.org 0x0000
+                           000080   133 _P0	=	0x0080
+                           000081   134 _SP	=	0x0081
+                           000082   135 _DPL	=	0x0082
+                           000083   136 _DPH	=	0x0083
+                           000087   137 _PCON	=	0x0087
+                           000088   138 _TCON	=	0x0088
+                           000089   139 _TMOD	=	0x0089
+                           00008A   140 _TL0	=	0x008a
+                           00008B   141 _TL1	=	0x008b
+                           00008C   142 _TH0	=	0x008c
+                           00008D   143 _TH1	=	0x008d
+                           000090   144 _P1	=	0x0090
+                           000098   145 _SCON	=	0x0098
+                           000099   146 _SBUF	=	0x0099
+                           0000A0   147 _P2	=	0x00a0
+                           0000A8   148 _IE	=	0x00a8
+                           0000B0   149 _P3	=	0x00b0
+                           0000B8   150 _IP	=	0x00b8
+                           0000D0   151 _PSW	=	0x00d0
+                           0000E0   152 _ACC	=	0x00e0
+                           0000F0   153 _B	=	0x00f0
+                                    154 ;--------------------------------------------------------
+                                    155 ; special function bits
+                                    156 ;--------------------------------------------------------
+                                    157 	.area RSEG    (ABS,DATA)
+      000000                        158 	.org 0x0000
+                           000080   159 _P0_0	=	0x0080
+                           000081   160 _P0_1	=	0x0081
+                           000082   161 _P0_2	=	0x0082
+                           000083   162 _P0_3	=	0x0083
+                           000084   163 _P0_4	=	0x0084
+                           000085   164 _P0_5	=	0x0085
+                           000086   165 _P0_6	=	0x0086
+                           000087   166 _P0_7	=	0x0087
+                           000088   167 _IT0	=	0x0088
+                           000089   168 _IE0	=	0x0089
+                           00008A   169 _IT1	=	0x008a
+                           00008B   170 _IE1	=	0x008b
+                           00008C   171 _TR0	=	0x008c
+                           00008D   172 _TF0	=	0x008d
+                           00008E   173 _TR1	=	0x008e
+                           00008F   174 _TF1	=	0x008f
+                           000090   175 _P1_0	=	0x0090
+                           000091   176 _P1_1	=	0x0091
+                           000092   177 _P1_2	=	0x0092
+                           000093   178 _P1_3	=	0x0093
+                           000094   179 _P1_4	=	0x0094
+                           000095   180 _P1_5	=	0x0095
+                           000096   181 _P1_6	=	0x0096
+                           000097   182 _P1_7	=	0x0097
+                           000098   183 _RI	=	0x0098
+                           000099   184 _TI	=	0x0099
+                           00009A   185 _RB8	=	0x009a
+                           00009B   186 _TB8	=	0x009b
+                           00009C   187 _REN	=	0x009c
+                           00009D   188 _SM2	=	0x009d
+                           00009E   189 _SM1	=	0x009e
+                           00009F   190 _SM0	=	0x009f
+                           0000A0   191 _P2_0	=	0x00a0
+                           0000A1   192 _P2_1	=	0x00a1
+                           0000A2   193 _P2_2	=	0x00a2
+                           0000A3   194 _P2_3	=	0x00a3
+                           0000A4   195 _P2_4	=	0x00a4
+                           0000A5   196 _P2_5	=	0x00a5
+                           0000A6   197 _P2_6	=	0x00a6
+                           0000A7   198 _P2_7	=	0x00a7
+                           0000A8   199 _EX0	=	0x00a8
+                           0000A9   200 _ET0	=	0x00a9
+                           0000AA   201 _EX1	=	0x00aa
+                           0000AB   202 _ET1	=	0x00ab
+                           0000AC   203 _ES	=	0x00ac
+                           0000AF   204 _EA	=	0x00af
+                           0000B0   205 _P3_0	=	0x00b0
+                           0000B1   206 _P3_1	=	0x00b1
+                           0000B2   207 _P3_2	=	0x00b2
+                           0000B3   208 _P3_3	=	0x00b3
+                           0000B4   209 _P3_4	=	0x00b4
+                           0000B5   210 _P3_5	=	0x00b5
+                           0000B6   211 _P3_6	=	0x00b6
+                           0000B7   212 _P3_7	=	0x00b7
+                           0000B0   213 _RXD	=	0x00b0
+                           0000B1   214 _TXD	=	0x00b1
+                           0000B2   215 _INT0	=	0x00b2
+                           0000B3   216 _INT1	=	0x00b3
+                           0000B4   217 _T0	=	0x00b4
+                           0000B5   218 _T1	=	0x00b5
+                           0000B6   219 _WR	=	0x00b6
+                           0000B7   220 _RD	=	0x00b7
+                           0000B8   221 _PX0	=	0x00b8
+                           0000B9   222 _PT0	=	0x00b9
+                           0000BA   223 _PX1	=	0x00ba
+                           0000BB   224 _PT1	=	0x00bb
+                           0000BC   225 _PS	=	0x00bc
+                           0000D0   226 _P	=	0x00d0
+                           0000D1   227 _F1	=	0x00d1
+                           0000D2   228 _OV	=	0x00d2
+                           0000D3   229 _RS0	=	0x00d3
+                           0000D4   230 _RS1	=	0x00d4
+                           0000D5   231 _F0	=	0x00d5
+                           0000D6   232 _AC	=	0x00d6
+                           0000D7   233 _CY	=	0x00d7
+                                    234 ;--------------------------------------------------------
+                                    235 ; overlayable register banks
+                                    236 ;--------------------------------------------------------
+                                    237 	.area REG_BANK_0	(REL,OVR,DATA)
+      000000                        238 	.ds 8
+                                    239 ;--------------------------------------------------------
+                                    240 ; internal ram data
+                                    241 ;--------------------------------------------------------
+                                    242 	.area DSEG    (DATA)
+                           000033   243 _spot	=	0x0033
+                           000034   244 _in	=	0x0034
+                           000035   245 _out	=	0x0035
+                           000036   246 _slot	=	0x0036
+                           000037   247 _mutex	=	0x0037
+                           000038   248 _empty	=	0x0038
+                           000039   249 _buff	=	0x0039
+                                    250 ;--------------------------------------------------------
+                                    251 ; overlayable items in internal ram 
+                                    252 ;--------------------------------------------------------
+                                    253 ;--------------------------------------------------------
+                                    254 ; Stack segment in internal ram 
+                                    255 ;--------------------------------------------------------
+                                    256 	.area	SSEG
+      000000                        257 __start__stack:
+      000000                        258 	.ds	1
+                                    259 
+                                    260 ;--------------------------------------------------------
+                                    261 ; indirectly addressable internal ram data
+                                    262 ;--------------------------------------------------------
+                                    263 	.area ISEG    (DATA)
+                                    264 ;--------------------------------------------------------
+                                    265 ; absolute internal ram data
+                                    266 ;--------------------------------------------------------
+                                    267 	.area IABS    (ABS,DATA)
+                                    268 	.area IABS    (ABS,DATA)
+                                    269 ;--------------------------------------------------------
+                                    270 ; bit data
+                                    271 ;--------------------------------------------------------
+                                    272 	.area BSEG    (BIT)
+                                    273 ;--------------------------------------------------------
+                                    274 ; paged external ram data
+                                    275 ;--------------------------------------------------------
+                                    276 	.area PSEG    (PAG,XDATA)
+                                    277 ;--------------------------------------------------------
+                                    278 ; external ram data
+                                    279 ;--------------------------------------------------------
+                                    280 	.area XSEG    (XDATA)
+                                    281 ;--------------------------------------------------------
+                                    282 ; absolute external ram data
+                                    283 ;--------------------------------------------------------
+                                    284 	.area XABS    (ABS,XDATA)
+                                    285 ;--------------------------------------------------------
+                                    286 ; external initialized ram data
+                                    287 ;--------------------------------------------------------
+                                    288 	.area XISEG   (XDATA)
+                                    289 	.area HOME    (CODE)
+                                    290 	.area GSINIT0 (CODE)
+                                    291 	.area GSINIT1 (CODE)
+                                    292 	.area GSINIT2 (CODE)
+                                    293 	.area GSINIT3 (CODE)
+                                    294 	.area GSINIT4 (CODE)
+                                    295 	.area GSINIT5 (CODE)
+                                    296 	.area GSINIT  (CODE)
+                                    297 	.area GSFINAL (CODE)
+                                    298 	.area CSEG    (CODE)
+                                    299 ;--------------------------------------------------------
+                                    300 ; interrupt vector 
+                                    301 ;--------------------------------------------------------
+                                    302 	.area HOME    (CODE)
+      000000                        303 __interrupt_vect:
+      000000 02r00r5E         [24]  304 	ljmp	__sdcc_gsinit_startup
+      000003 32               [24]  305 	reti
+      000004                        306 	.ds	7
+      00000B 02r00r00         [24]  307 	ljmp	_timer0_ISR
+                                    308 ;--------------------------------------------------------
+                                    309 ; global & static initialisations
+                                    310 ;--------------------------------------------------------
+                                    311 	.area HOME    (CODE)
+                                    312 	.area GSINIT  (CODE)
+                                    313 	.area GSFINAL (CODE)
+                                    314 	.area GSINIT  (CODE)
+                                    315 	.globl __sdcc_gsinit_startup
+                                    316 	.globl __sdcc_program_startup
+                                    317 	.globl __start__stack
+                                    318 	.globl __mcs51_genXINIT
+                                    319 	.globl __mcs51_genXRAMCLEAR
+                                    320 	.globl __mcs51_genRAMCLEAR
+                                    321 	.area GSFINAL (CODE)
+      000000 02r00r0E         [24]  322 	ljmp	__sdcc_program_startup
+                                    323 ;--------------------------------------------------------
+                                    324 ; Home
+                                    325 ;--------------------------------------------------------
+                                    326 	.area HOME    (CODE)
+                                    327 	.area HOME    (CODE)
+      00000E                        328 __sdcc_program_startup:
+      00000E 02r00r04         [24]  329 	ljmp	_main
+                                    330 ;	return from main will return to caller
+                                    331 ;--------------------------------------------------------
+                                    332 ; code
+                                    333 ;--------------------------------------------------------
+                                    334 	.area CSEG    (CODE)
+                                    335 ;------------------------------------------------------------
+                                    336 ;Allocation info for local variables in function 'timer0_ISR'
+                                    337 ;------------------------------------------------------------
+                                    338 ;	testparking.c:26: void timer0_ISR(void) __interrupt(1)
+                                    339 ;	-----------------------------------------
+                                    340 ;	 function timer0_ISR
+                                    341 ;	-----------------------------------------
+      000000                        342 _timer0_ISR:
+                           000007   343 	ar7 = 0x07
+                           000006   344 	ar6 = 0x06
+                           000005   345 	ar5 = 0x05
+                           000004   346 	ar4 = 0x04
+                           000003   347 	ar3 = 0x03
+                           000002   348 	ar2 = 0x02
+                           000001   349 	ar1 = 0x01
+                           000000   350 	ar0 = 0x00
+                                    351 ;	testparking.c:30: __endasm;
+      000000 02r00r00         [24]  352 	ljmp _myTimer0Handler
+      000003 32               [24]  353 	reti
+                                    354 ;	eliminated unneeded mov psw,# (no regs used in bank)
+                                    355 ;	eliminated unneeded push/pop psw
+                                    356 ;	eliminated unneeded push/pop dpl
+                                    357 ;	eliminated unneeded push/pop dph
+                                    358 ;	eliminated unneeded push/pop b
+                                    359 ;	eliminated unneeded push/pop acc
+                                    360 ;------------------------------------------------------------
+                                    361 ;Allocation info for local variables in function 'main'
+                                    362 ;------------------------------------------------------------
+                                    363 ;	testparking.c:33: void main(void)
+                                    364 ;	-----------------------------------------
+                                    365 ;	 function main
+                                    366 ;	-----------------------------------------
+      000004                        367 _main:
+                                    368 ;	testparking.c:37: __endasm;
+      000004 75 AF 00         [24]  369 	MOV _EA, #0
+                                    370 ;	testparking.c:38: TMOD |= 0x20; // preserve modification in bootstrap
+      000007 43 89 20         [24]  371 	orl	_TMOD,#0x20
+                                    372 ;	testparking.c:39: TH1 = -6; // baud rate
+      00000A 75 8D FA         [24]  373 	mov	_TH1,#0xFA
+                                    374 ;	testparking.c:40: SCON = 0x50; // 8-bit 1 stop REN
+      00000D 75 98 50         [24]  375 	mov	_SCON,#0x50
+                                    376 ;	testparking.c:41: TR1 = 1; // start timer 1
+      000010 D2 8E            [12]  377 	setb	_TR1
+                                    378 ;	testparking.c:44: for(i = 0; i < BUFF_SIZE; i++)
+      000012 75*00 00         [24]  379 	mov	_i,#0x00
+      000015                        380 00105$:
+                                    381 ;	testparking.c:45: buff[i] = 0;
+      000015 E5*00            [12]  382 	mov	a,_i
+      000017 24 39            [12]  383 	add	a,#_buff
+      000019 F8               [12]  384 	mov	r0,a
+      00001A 76 00            [12]  385 	mov	@r0,#0x00
+                                    386 ;	testparking.c:44: for(i = 0; i < BUFF_SIZE; i++)
+      00001C 05*00            [12]  387 	inc	_i
+      00001E C3               [12]  388 	clr	c
+      00001F E5*00            [12]  389 	mov	a,_i
+      000021 64 80            [12]  390 	xrl	a,#0x80
+      000023 94 87            [12]  391 	subb	a,#0x87
+      000025 40 EE            [24]  392 	jc	00105$
+                                    393 ;	testparking.c:46: in = out = 0;
+      000027 75 35 00         [24]  394 	mov	_out,#0x00
+      00002A 75 34 00         [24]  395 	mov	_in,#0x00
+                                    396 ;	testparking.c:47: spot = 0;
+      00002D 75 33 00         [24]  397 	mov	_spot,#0x00
+                                    398 ;	testparking.c:48: TI = 1;
+      000030 D2 99            [12]  399 	setb	_TI
+                                    400 ;	testparking.c:50: SemaphoreCreate(mutex, 1);
+      000032 75 37 01         [24]  401 	mov	_mutex,#0x01
+                                    402 ;	testparking.c:51: SemaphoreCreate(empty, BUFF_SIZE);
+      000035 75 38 07         [24]  403 	mov	_empty,#0x07
+                                    404 ;	testparking.c:52: SemaphoreCreate(slot, 2);
+      000038 75 36 02         [24]  405 	mov	_slot,#0x02
+                                    406 ;	testparking.c:55: __endasm;
+      00003B 75 AF 01         [24]  407 	MOV _EA, #1
+                                    408 ;	testparking.c:56: ThreadCreate(&CarA);
+      00003E 90r00r65         [24]  409 	mov	dptr,#_CarA
+      000041 12r00r00         [24]  410 	lcall	_ThreadCreate
+                                    411 ;	testparking.c:57: ThreadCreate(&CarB);
+      000044 90r01r92         [24]  412 	mov	dptr,#_CarB
+      000047 12r00r00         [24]  413 	lcall	_ThreadCreate
+                                    414 ;	testparking.c:58: ThreadCreate(&CarC);
+      00004A 90r02rBF         [24]  415 	mov	dptr,#_CarC
+      00004D 12r00r00         [24]  416 	lcall	_ThreadCreate
+                                    417 ;	testparking.c:59: ThreadCreate(&CarD);
+      000050 90r03rEC         [24]  418 	mov	dptr,#_CarD
+      000053 12r00r00         [24]  419 	lcall	_ThreadCreate
+                                    420 ;	testparking.c:60: ThreadCreate(&CarE);
+      000056 90r05r19         [24]  421 	mov	dptr,#_CarE
+      000059 12r00r00         [24]  422 	lcall	_ThreadCreate
+                                    423 ;	testparking.c:62: while(1) {}
+      00005C                        424 00103$:
+      00005C 80 FE            [24]  425 	sjmp	00103$
+                                    426 ;------------------------------------------------------------
+                                    427 ;Allocation info for local variables in function '_sdcc_gsinit_startup'
+                                    428 ;------------------------------------------------------------
+                                    429 ;	testparking.c:64: void _sdcc_gsinit_startup(void)
+                                    430 ;	-----------------------------------------
+                                    431 ;	 function _sdcc_gsinit_startup
+                                    432 ;	-----------------------------------------
+      00005E                        433 __sdcc_gsinit_startup:
+                                    434 ;	testparking.c:68: __endasm;
+      00005E 02r00r00         [24]  435 	ljmp _Bootstrap
+      000061 22               [24]  436 	ret
+                                    437 ;------------------------------------------------------------
+                                    438 ;Allocation info for local variables in function '_mcs51_genRAMCLEAR'
+                                    439 ;------------------------------------------------------------
+                                    440 ;	testparking.c:70: void _mcs51_genRAMCLEAR(void) {}
+                                    441 ;	-----------------------------------------
+                                    442 ;	 function _mcs51_genRAMCLEAR
+                                    443 ;	-----------------------------------------
+      000062                        444 __mcs51_genRAMCLEAR:
+      000062 22               [24]  445 	ret
+                                    446 ;------------------------------------------------------------
+                                    447 ;Allocation info for local variables in function '_mcs51_genXINIT'
+                                    448 ;------------------------------------------------------------
+                                    449 ;	testparking.c:71: void _mcs51_genXINIT(void) {}
+                                    450 ;	-----------------------------------------
+                                    451 ;	 function _mcs51_genXINIT
+                                    452 ;	-----------------------------------------
+      000063                        453 __mcs51_genXINIT:
+      000063 22               [24]  454 	ret
+                                    455 ;------------------------------------------------------------
+                                    456 ;Allocation info for local variables in function '_mcs51_genXRAMCLEAR'
+                                    457 ;------------------------------------------------------------
+                                    458 ;	testparking.c:72: void _mcs51_genXRAMCLEAR(void) {}
+                                    459 ;	-----------------------------------------
+                                    460 ;	 function _mcs51_genXRAMCLEAR
+                                    461 ;	-----------------------------------------
+      000064                        462 __mcs51_genXRAMCLEAR:
+      000064 22               [24]  463 	ret
+                                    464 ;------------------------------------------------------------
+                                    465 ;Allocation info for local variables in function 'CarA'
+                                    466 ;------------------------------------------------------------
+                                    467 ;	testparking.c:74: void CarA(void)
+                                    468 ;	-----------------------------------------
+                                    469 ;	 function CarA
+                                    470 ;	-----------------------------------------
+      000065                        471 _CarA:
+                                    472 ;	testparking.c:76: SemaphoreWait(slot);
+      000065                        473 	 0$:
+      000065 85 36 E0         [24]  474 	MOV ACC, _slot 
+      000068 20 E7 FA         [24]  475 	JB ACC.7, 0$ 
+      00006B 60 F8            [24]  476 	JZ 0$ 
+      00006D 15 36            [12]  477 	DEC _slot 
+                                    478 ;	testparking.c:77: if(!(spot & 0x0F)){
+      00006F E5 33            [12]  479 	mov	a,_spot
+      000071 54 0F            [12]  480 	anl	a,#0x0F
+      000073 60 03            [24]  481 	jz	00110$
+      000075 02r01r05         [24]  482 	ljmp	00102$
+      000078                        483 00110$:
+                                    484 ;	testparking.c:78: LOG('A');
+      000078 85 00 AF         [24]  485 	MOV _EA, 0x0 
+      00007B                        486 	 1$:
+      00007B 85 38 E0         [24]  487 	MOV ACC, _empty 
+      00007E 20 E7 FA         [24]  488 	JB ACC.7, 1$ 
+      000081 60 F8            [24]  489 	JZ 1$ 
+      000083 15 38            [12]  490 	DEC _empty 
+      000085                        491 	 2$:
+      000085 85 37 E0         [24]  492 	MOV ACC, _mutex 
+      000088 20 E7 FA         [24]  493 	JB ACC.7, 2$ 
+      00008B 60 F8            [24]  494 	JZ 2$ 
+      00008D 15 37            [12]  495 	DEC _mutex 
+      00008F E5 34            [12]  496 	mov	a,_in
+      000091 24 39            [12]  497 	add	a,#_buff
+      000093 F8               [12]  498 	mov	r0,a
+      000094 76 41            [12]  499 	mov	@r0,#0x41
+      000096 AE 34            [24]  500 	mov	r6,_in
+      000098 E5 34            [12]  501 	mov	a,_in
+      00009A 33               [12]  502 	rlc	a
+      00009B 95 E0            [12]  503 	subb	a,acc
+      00009D FF               [12]  504 	mov	r7,a
+      00009E 8E 82            [24]  505 	mov	dpl,r6
+      0000A0 8F 83            [24]  506 	mov	dph,r7
+      0000A2 A3               [24]  507 	inc	dptr
+      0000A3 75*00 07         [24]  508 	mov	__modsint_PARM_2,#0x07
+      0000A6 75*01 00         [24]  509 	mov	(__modsint_PARM_2 + 1),#0x00
+      0000A9 12r00r00         [24]  510 	lcall	__modsint
+      0000AC AE 82            [24]  511 	mov	r6,dpl
+      0000AE AF 83            [24]  512 	mov	r7,dph
+      0000B0 8E 34            [24]  513 	mov	_in,r6
+      0000B2 05 37            [12]  514 	INC _mutex 
+      0000B4 85 01 AF         [24]  515 	MOV _EA, 0x1 
+                                    516 ;	testparking.c:79: spot |= 1;
+      0000B7 43 33 01         [24]  517 	orl	_spot,#0x01
+                                    518 ;	testparking.c:80: delay(A_DELAY);
+      0000BA 75 82 03         [24]  519 	mov	dpl,#0x03
+      0000BD 12r00r00         [24]  520 	lcall	_delay
+                                    521 ;	testparking.c:81: LOG('A');
+      0000C0 85 00 AF         [24]  522 	MOV _EA, 0x0 
+      0000C3                        523 	 3$:
+      0000C3 85 38 E0         [24]  524 	MOV ACC, _empty 
+      0000C6 20 E7 FA         [24]  525 	JB ACC.7, 3$ 
+      0000C9 60 F8            [24]  526 	JZ 3$ 
+      0000CB 15 38            [12]  527 	DEC _empty 
+      0000CD                        528 	 4$:
+      0000CD 85 37 E0         [24]  529 	MOV ACC, _mutex 
+      0000D0 20 E7 FA         [24]  530 	JB ACC.7, 4$ 
+      0000D3 60 F8            [24]  531 	JZ 4$ 
+      0000D5 15 37            [12]  532 	DEC _mutex 
+      0000D7 E5 34            [12]  533 	mov	a,_in
+      0000D9 24 39            [12]  534 	add	a,#_buff
+      0000DB F8               [12]  535 	mov	r0,a
+      0000DC 76 41            [12]  536 	mov	@r0,#0x41
+      0000DE AE 34            [24]  537 	mov	r6,_in
+      0000E0 E5 34            [12]  538 	mov	a,_in
+      0000E2 33               [12]  539 	rlc	a
+      0000E3 95 E0            [12]  540 	subb	a,acc
+      0000E5 FF               [12]  541 	mov	r7,a
+      0000E6 8E 82            [24]  542 	mov	dpl,r6
+      0000E8 8F 83            [24]  543 	mov	dph,r7
+      0000EA A3               [24]  544 	inc	dptr
+      0000EB 75*00 07         [24]  545 	mov	__modsint_PARM_2,#0x07
+      0000EE 75*01 00         [24]  546 	mov	(__modsint_PARM_2 + 1),#0x00
+      0000F1 12r00r00         [24]  547 	lcall	__modsint
+      0000F4 AE 82            [24]  548 	mov	r6,dpl
+      0000F6 AF 83            [24]  549 	mov	r7,dph
+      0000F8 8E 34            [24]  550 	mov	_in,r6
+      0000FA 05 37            [12]  551 	INC _mutex 
+      0000FC 85 01 AF         [24]  552 	MOV _EA, 0x1 
+                                    553 ;	testparking.c:82: spot &= (~0x0F);
+      0000FF 53 33 F0         [24]  554 	anl	_spot,#0xF0
+                                    555 ;	testparking.c:83: SemaphoreSignal(slot);
+      000102 05 36            [12]  556 	INC _slot 
+      000104 22               [24]  557 	ret
+      000105                        558 00102$:
+                                    559 ;	testparking.c:86: LOG('a');
+      000105 85 00 AF         [24]  560 	MOV _EA, 0x0 
+      000108                        561 	 5$:
+      000108 85 38 E0         [24]  562 	MOV ACC, _empty 
+      00010B 20 E7 FA         [24]  563 	JB ACC.7, 5$ 
+      00010E 60 F8            [24]  564 	JZ 5$ 
+      000110 15 38            [12]  565 	DEC _empty 
+      000112                        566 	 6$:
+      000112 85 37 E0         [24]  567 	MOV ACC, _mutex 
+      000115 20 E7 FA         [24]  568 	JB ACC.7, 6$ 
+      000118 60 F8            [24]  569 	JZ 6$ 
+      00011A 15 37            [12]  570 	DEC _mutex 
+      00011C E5 34            [12]  571 	mov	a,_in
+      00011E 24 39            [12]  572 	add	a,#_buff
+      000120 F8               [12]  573 	mov	r0,a
+      000121 76 61            [12]  574 	mov	@r0,#0x61
+      000123 AE 34            [24]  575 	mov	r6,_in
+      000125 E5 34            [12]  576 	mov	a,_in
+      000127 33               [12]  577 	rlc	a
+      000128 95 E0            [12]  578 	subb	a,acc
+      00012A FF               [12]  579 	mov	r7,a
+      00012B 8E 82            [24]  580 	mov	dpl,r6
+      00012D 8F 83            [24]  581 	mov	dph,r7
+      00012F A3               [24]  582 	inc	dptr
+      000130 75*00 07         [24]  583 	mov	__modsint_PARM_2,#0x07
+      000133 75*01 00         [24]  584 	mov	(__modsint_PARM_2 + 1),#0x00
+      000136 12r00r00         [24]  585 	lcall	__modsint
+      000139 AE 82            [24]  586 	mov	r6,dpl
+      00013B AF 83            [24]  587 	mov	r7,dph
+      00013D 8E 34            [24]  588 	mov	_in,r6
+      00013F 05 37            [12]  589 	INC _mutex 
+      000141 85 01 AF         [24]  590 	MOV _EA, 0x1 
+                                    591 ;	testparking.c:87: spot |= (1 << 4);
+      000144 43 33 10         [24]  592 	orl	_spot,#0x10
+                                    593 ;	testparking.c:88: delay(A_DELAY);
+      000147 75 82 03         [24]  594 	mov	dpl,#0x03
+      00014A 12r00r00         [24]  595 	lcall	_delay
+                                    596 ;	testparking.c:89: LOG('a');
+      00014D 85 00 AF         [24]  597 	MOV _EA, 0x0 
+      000150                        598 	 7$:
+      000150 85 38 E0         [24]  599 	MOV ACC, _empty 
+      000153 20 E7 FA         [24]  600 	JB ACC.7, 7$ 
+      000156 60 F8            [24]  601 	JZ 7$ 
+      000158 15 38            [12]  602 	DEC _empty 
+      00015A                        603 	 8$:
+      00015A 85 37 E0         [24]  604 	MOV ACC, _mutex 
+      00015D 20 E7 FA         [24]  605 	JB ACC.7, 8$ 
+      000160 60 F8            [24]  606 	JZ 8$ 
+      000162 15 37            [12]  607 	DEC _mutex 
+      000164 E5 34            [12]  608 	mov	a,_in
+      000166 24 39            [12]  609 	add	a,#_buff
+      000168 F8               [12]  610 	mov	r0,a
+      000169 76 61            [12]  611 	mov	@r0,#0x61
+      00016B AE 34            [24]  612 	mov	r6,_in
+      00016D E5 34            [12]  613 	mov	a,_in
+      00016F 33               [12]  614 	rlc	a
+      000170 95 E0            [12]  615 	subb	a,acc
+      000172 FF               [12]  616 	mov	r7,a
+      000173 8E 82            [24]  617 	mov	dpl,r6
+      000175 8F 83            [24]  618 	mov	dph,r7
+      000177 A3               [24]  619 	inc	dptr
+      000178 75*00 07         [24]  620 	mov	__modsint_PARM_2,#0x07
+      00017B 75*01 00         [24]  621 	mov	(__modsint_PARM_2 + 1),#0x00
+      00017E 12r00r00         [24]  622 	lcall	__modsint
+      000181 AE 82            [24]  623 	mov	r6,dpl
+      000183 AF 83            [24]  624 	mov	r7,dph
+      000185 8E 34            [24]  625 	mov	_in,r6
+      000187 05 37            [12]  626 	INC _mutex 
+      000189 85 01 AF         [24]  627 	MOV _EA, 0x1 
+                                    628 ;	testparking.c:90: spot &= (~0xF0);
+      00018C 53 33 0F         [24]  629 	anl	_spot,#0x0F
+                                    630 ;	testparking.c:91: SemaphoreSignal(slot);
+      00018F 05 36            [12]  631 	INC _slot 
+      000191 22               [24]  632 	ret
+                                    633 ;------------------------------------------------------------
+                                    634 ;Allocation info for local variables in function 'CarB'
+                                    635 ;------------------------------------------------------------
+                                    636 ;	testparking.c:94: void CarB(void)
+                                    637 ;	-----------------------------------------
+                                    638 ;	 function CarB
+                                    639 ;	-----------------------------------------
+      000192                        640 _CarB:
+                                    641 ;	testparking.c:96: SemaphoreWait(slot);
+      000192                        642 	 9$:
+      000192 85 36 E0         [24]  643 	MOV ACC, _slot 
+      000195 20 E7 FA         [24]  644 	JB ACC.7, 9$ 
+      000198 60 F8            [24]  645 	JZ 9$ 
+      00019A 15 36            [12]  646 	DEC _slot 
+                                    647 ;	testparking.c:97: if(!(spot & 0x0F)){
+      00019C E5 33            [12]  648 	mov	a,_spot
+      00019E 54 0F            [12]  649 	anl	a,#0x0F
+      0001A0 60 03            [24]  650 	jz	00110$
+      0001A2 02r02r32         [24]  651 	ljmp	00102$
+      0001A5                        652 00110$:
+                                    653 ;	testparking.c:98: LOG('B');
+      0001A5 85 00 AF         [24]  654 	MOV _EA, 0x0 
+      0001A8                        655 	 10$:
+      0001A8 85 38 E0         [24]  656 	MOV ACC, _empty 
+      0001AB 20 E7 FA         [24]  657 	JB ACC.7, 10$ 
+      0001AE 60 F8            [24]  658 	JZ 10$ 
+      0001B0 15 38            [12]  659 	DEC _empty 
+      0001B2                        660 	 11$:
+      0001B2 85 37 E0         [24]  661 	MOV ACC, _mutex 
+      0001B5 20 E7 FA         [24]  662 	JB ACC.7, 11$ 
+      0001B8 60 F8            [24]  663 	JZ 11$ 
+      0001BA 15 37            [12]  664 	DEC _mutex 
+      0001BC E5 34            [12]  665 	mov	a,_in
+      0001BE 24 39            [12]  666 	add	a,#_buff
+      0001C0 F8               [12]  667 	mov	r0,a
+      0001C1 76 42            [12]  668 	mov	@r0,#0x42
+      0001C3 AE 34            [24]  669 	mov	r6,_in
+      0001C5 E5 34            [12]  670 	mov	a,_in
+      0001C7 33               [12]  671 	rlc	a
+      0001C8 95 E0            [12]  672 	subb	a,acc
+      0001CA FF               [12]  673 	mov	r7,a
+      0001CB 8E 82            [24]  674 	mov	dpl,r6
+      0001CD 8F 83            [24]  675 	mov	dph,r7
+      0001CF A3               [24]  676 	inc	dptr
+      0001D0 75*00 07         [24]  677 	mov	__modsint_PARM_2,#0x07
+      0001D3 75*01 00         [24]  678 	mov	(__modsint_PARM_2 + 1),#0x00
+      0001D6 12r00r00         [24]  679 	lcall	__modsint
+      0001D9 AE 82            [24]  680 	mov	r6,dpl
+      0001DB AF 83            [24]  681 	mov	r7,dph
+      0001DD 8E 34            [24]  682 	mov	_in,r6
+      0001DF 05 37            [12]  683 	INC _mutex 
+      0001E1 85 01 AF         [24]  684 	MOV _EA, 0x1 
+                                    685 ;	testparking.c:99: spot |= 2;
+      0001E4 43 33 02         [24]  686 	orl	_spot,#0x02
+                                    687 ;	testparking.c:100: delay(B_DELAY);
+      0001E7 75 82 02         [24]  688 	mov	dpl,#0x02
+      0001EA 12r00r00         [24]  689 	lcall	_delay
+                                    690 ;	testparking.c:101: LOG('B');
+      0001ED 85 00 AF         [24]  691 	MOV _EA, 0x0 
+      0001F0                        692 	 12$:
+      0001F0 85 38 E0         [24]  693 	MOV ACC, _empty 
+      0001F3 20 E7 FA         [24]  694 	JB ACC.7, 12$ 
+      0001F6 60 F8            [24]  695 	JZ 12$ 
+      0001F8 15 38            [12]  696 	DEC _empty 
+      0001FA                        697 	 13$:
+      0001FA 85 37 E0         [24]  698 	MOV ACC, _mutex 
+      0001FD 20 E7 FA         [24]  699 	JB ACC.7, 13$ 
+      000200 60 F8            [24]  700 	JZ 13$ 
+      000202 15 37            [12]  701 	DEC _mutex 
+      000204 E5 34            [12]  702 	mov	a,_in
+      000206 24 39            [12]  703 	add	a,#_buff
+      000208 F8               [12]  704 	mov	r0,a
+      000209 76 42            [12]  705 	mov	@r0,#0x42
+      00020B AE 34            [24]  706 	mov	r6,_in
+      00020D E5 34            [12]  707 	mov	a,_in
+      00020F 33               [12]  708 	rlc	a
+      000210 95 E0            [12]  709 	subb	a,acc
+      000212 FF               [12]  710 	mov	r7,a
+      000213 8E 82            [24]  711 	mov	dpl,r6
+      000215 8F 83            [24]  712 	mov	dph,r7
+      000217 A3               [24]  713 	inc	dptr
+      000218 75*00 07         [24]  714 	mov	__modsint_PARM_2,#0x07
+      00021B 75*01 00         [24]  715 	mov	(__modsint_PARM_2 + 1),#0x00
+      00021E 12r00r00         [24]  716 	lcall	__modsint
+      000221 AE 82            [24]  717 	mov	r6,dpl
+      000223 AF 83            [24]  718 	mov	r7,dph
+      000225 8E 34            [24]  719 	mov	_in,r6
+      000227 05 37            [12]  720 	INC _mutex 
+      000229 85 01 AF         [24]  721 	MOV _EA, 0x1 
+                                    722 ;	testparking.c:102: spot &= (~0x0F);
+      00022C 53 33 F0         [24]  723 	anl	_spot,#0xF0
+                                    724 ;	testparking.c:103: SemaphoreSignal(slot);
+      00022F 05 36            [12]  725 	INC _slot 
+      000231 22               [24]  726 	ret
+      000232                        727 00102$:
+                                    728 ;	testparking.c:106: LOG('b');
+      000232 85 00 AF         [24]  729 	MOV _EA, 0x0 
+      000235                        730 	 14$:
+      000235 85 38 E0         [24]  731 	MOV ACC, _empty 
+      000238 20 E7 FA         [24]  732 	JB ACC.7, 14$ 
+      00023B 60 F8            [24]  733 	JZ 14$ 
+      00023D 15 38            [12]  734 	DEC _empty 
+      00023F                        735 	 15$:
+      00023F 85 37 E0         [24]  736 	MOV ACC, _mutex 
+      000242 20 E7 FA         [24]  737 	JB ACC.7, 15$ 
+      000245 60 F8            [24]  738 	JZ 15$ 
+      000247 15 37            [12]  739 	DEC _mutex 
+      000249 E5 34            [12]  740 	mov	a,_in
+      00024B 24 39            [12]  741 	add	a,#_buff
+      00024D F8               [12]  742 	mov	r0,a
+      00024E 76 62            [12]  743 	mov	@r0,#0x62
+      000250 AE 34            [24]  744 	mov	r6,_in
+      000252 E5 34            [12]  745 	mov	a,_in
+      000254 33               [12]  746 	rlc	a
+      000255 95 E0            [12]  747 	subb	a,acc
+      000257 FF               [12]  748 	mov	r7,a
+      000258 8E 82            [24]  749 	mov	dpl,r6
+      00025A 8F 83            [24]  750 	mov	dph,r7
+      00025C A3               [24]  751 	inc	dptr
+      00025D 75*00 07         [24]  752 	mov	__modsint_PARM_2,#0x07
+      000260 75*01 00         [24]  753 	mov	(__modsint_PARM_2 + 1),#0x00
+      000263 12r00r00         [24]  754 	lcall	__modsint
+      000266 AE 82            [24]  755 	mov	r6,dpl
+      000268 AF 83            [24]  756 	mov	r7,dph
+      00026A 8E 34            [24]  757 	mov	_in,r6
+      00026C 05 37            [12]  758 	INC _mutex 
+      00026E 85 01 AF         [24]  759 	MOV _EA, 0x1 
+                                    760 ;	testparking.c:107: spot |= (2 << 4);
+      000271 43 33 20         [24]  761 	orl	_spot,#0x20
+                                    762 ;	testparking.c:108: delay(B_DELAY);
+      000274 75 82 02         [24]  763 	mov	dpl,#0x02
+      000277 12r00r00         [24]  764 	lcall	_delay
+                                    765 ;	testparking.c:109: LOG('b');
+      00027A 85 00 AF         [24]  766 	MOV _EA, 0x0 
+      00027D                        767 	 16$:
+      00027D 85 38 E0         [24]  768 	MOV ACC, _empty 
+      000280 20 E7 FA         [24]  769 	JB ACC.7, 16$ 
+      000283 60 F8            [24]  770 	JZ 16$ 
+      000285 15 38            [12]  771 	DEC _empty 
+      000287                        772 	 17$:
+      000287 85 37 E0         [24]  773 	MOV ACC, _mutex 
+      00028A 20 E7 FA         [24]  774 	JB ACC.7, 17$ 
+      00028D 60 F8            [24]  775 	JZ 17$ 
+      00028F 15 37            [12]  776 	DEC _mutex 
+      000291 E5 34            [12]  777 	mov	a,_in
+      000293 24 39            [12]  778 	add	a,#_buff
+      000295 F8               [12]  779 	mov	r0,a
+      000296 76 62            [12]  780 	mov	@r0,#0x62
+      000298 AE 34            [24]  781 	mov	r6,_in
+      00029A E5 34            [12]  782 	mov	a,_in
+      00029C 33               [12]  783 	rlc	a
+      00029D 95 E0            [12]  784 	subb	a,acc
+      00029F FF               [12]  785 	mov	r7,a
+      0002A0 8E 82            [24]  786 	mov	dpl,r6
+      0002A2 8F 83            [24]  787 	mov	dph,r7
+      0002A4 A3               [24]  788 	inc	dptr
+      0002A5 75*00 07         [24]  789 	mov	__modsint_PARM_2,#0x07
+      0002A8 75*01 00         [24]  790 	mov	(__modsint_PARM_2 + 1),#0x00
+      0002AB 12r00r00         [24]  791 	lcall	__modsint
+      0002AE AE 82            [24]  792 	mov	r6,dpl
+      0002B0 AF 83            [24]  793 	mov	r7,dph
+      0002B2 8E 34            [24]  794 	mov	_in,r6
+      0002B4 05 37            [12]  795 	INC _mutex 
+      0002B6 85 01 AF         [24]  796 	MOV _EA, 0x1 
+                                    797 ;	testparking.c:110: spot &= (~0xF0);
+      0002B9 53 33 0F         [24]  798 	anl	_spot,#0x0F
+                                    799 ;	testparking.c:111: SemaphoreSignal(slot);
+      0002BC 05 36            [12]  800 	INC _slot 
+      0002BE 22               [24]  801 	ret
+                                    802 ;------------------------------------------------------------
+                                    803 ;Allocation info for local variables in function 'CarC'
+                                    804 ;------------------------------------------------------------
+                                    805 ;	testparking.c:114: void CarC(void)
+                                    806 ;	-----------------------------------------
+                                    807 ;	 function CarC
+                                    808 ;	-----------------------------------------
+      0002BF                        809 _CarC:
+                                    810 ;	testparking.c:116: SemaphoreWait(slot);
+      0002BF                        811 	 18$:
+      0002BF 85 36 E0         [24]  812 	MOV ACC, _slot 
+      0002C2 20 E7 FA         [24]  813 	JB ACC.7, 18$ 
+      0002C5 60 F8            [24]  814 	JZ 18$ 
+      0002C7 15 36            [12]  815 	DEC _slot 
+                                    816 ;	testparking.c:117: if(!(spot & 0x0F)){
+      0002C9 E5 33            [12]  817 	mov	a,_spot
+      0002CB 54 0F            [12]  818 	anl	a,#0x0F
+      0002CD 60 03            [24]  819 	jz	00110$
+      0002CF 02r03r5F         [24]  820 	ljmp	00102$
+      0002D2                        821 00110$:
+                                    822 ;	testparking.c:118: LOG('C');
+      0002D2 85 00 AF         [24]  823 	MOV _EA, 0x0 
+      0002D5                        824 	 19$:
+      0002D5 85 38 E0         [24]  825 	MOV ACC, _empty 
+      0002D8 20 E7 FA         [24]  826 	JB ACC.7, 19$ 
+      0002DB 60 F8            [24]  827 	JZ 19$ 
+      0002DD 15 38            [12]  828 	DEC _empty 
+      0002DF                        829 	 20$:
+      0002DF 85 37 E0         [24]  830 	MOV ACC, _mutex 
+      0002E2 20 E7 FA         [24]  831 	JB ACC.7, 20$ 
+      0002E5 60 F8            [24]  832 	JZ 20$ 
+      0002E7 15 37            [12]  833 	DEC _mutex 
+      0002E9 E5 34            [12]  834 	mov	a,_in
+      0002EB 24 39            [12]  835 	add	a,#_buff
+      0002ED F8               [12]  836 	mov	r0,a
+      0002EE 76 43            [12]  837 	mov	@r0,#0x43
+      0002F0 AE 34            [24]  838 	mov	r6,_in
+      0002F2 E5 34            [12]  839 	mov	a,_in
+      0002F4 33               [12]  840 	rlc	a
+      0002F5 95 E0            [12]  841 	subb	a,acc
+      0002F7 FF               [12]  842 	mov	r7,a
+      0002F8 8E 82            [24]  843 	mov	dpl,r6
+      0002FA 8F 83            [24]  844 	mov	dph,r7
+      0002FC A3               [24]  845 	inc	dptr
+      0002FD 75*00 07         [24]  846 	mov	__modsint_PARM_2,#0x07
+      000300 75*01 00         [24]  847 	mov	(__modsint_PARM_2 + 1),#0x00
+      000303 12r00r00         [24]  848 	lcall	__modsint
+      000306 AE 82            [24]  849 	mov	r6,dpl
+      000308 AF 83            [24]  850 	mov	r7,dph
+      00030A 8E 34            [24]  851 	mov	_in,r6
+      00030C 05 37            [12]  852 	INC _mutex 
+      00030E 85 01 AF         [24]  853 	MOV _EA, 0x1 
+                                    854 ;	testparking.c:119: spot |= 3;
+      000311 43 33 03         [24]  855 	orl	_spot,#0x03
+                                    856 ;	testparking.c:120: delay(C_DELAY);
+      000314 75 82 02         [24]  857 	mov	dpl,#0x02
+      000317 12r00r00         [24]  858 	lcall	_delay
+                                    859 ;	testparking.c:121: LOG('C');
+      00031A 85 00 AF         [24]  860 	MOV _EA, 0x0 
+      00031D                        861 	 21$:
+      00031D 85 38 E0         [24]  862 	MOV ACC, _empty 
+      000320 20 E7 FA         [24]  863 	JB ACC.7, 21$ 
+      000323 60 F8            [24]  864 	JZ 21$ 
+      000325 15 38            [12]  865 	DEC _empty 
+      000327                        866 	 22$:
+      000327 85 37 E0         [24]  867 	MOV ACC, _mutex 
+      00032A 20 E7 FA         [24]  868 	JB ACC.7, 22$ 
+      00032D 60 F8            [24]  869 	JZ 22$ 
+      00032F 15 37            [12]  870 	DEC _mutex 
+      000331 E5 34            [12]  871 	mov	a,_in
+      000333 24 39            [12]  872 	add	a,#_buff
+      000335 F8               [12]  873 	mov	r0,a
+      000336 76 43            [12]  874 	mov	@r0,#0x43
+      000338 AE 34            [24]  875 	mov	r6,_in
+      00033A E5 34            [12]  876 	mov	a,_in
+      00033C 33               [12]  877 	rlc	a
+      00033D 95 E0            [12]  878 	subb	a,acc
+      00033F FF               [12]  879 	mov	r7,a
+      000340 8E 82            [24]  880 	mov	dpl,r6
+      000342 8F 83            [24]  881 	mov	dph,r7
+      000344 A3               [24]  882 	inc	dptr
+      000345 75*00 07         [24]  883 	mov	__modsint_PARM_2,#0x07
+      000348 75*01 00         [24]  884 	mov	(__modsint_PARM_2 + 1),#0x00
+      00034B 12r00r00         [24]  885 	lcall	__modsint
+      00034E AE 82            [24]  886 	mov	r6,dpl
+      000350 AF 83            [24]  887 	mov	r7,dph
+      000352 8E 34            [24]  888 	mov	_in,r6
+      000354 05 37            [12]  889 	INC _mutex 
+      000356 85 01 AF         [24]  890 	MOV _EA, 0x1 
+                                    891 ;	testparking.c:122: spot &= (~0x0F);
+      000359 53 33 F0         [24]  892 	anl	_spot,#0xF0
+                                    893 ;	testparking.c:123: SemaphoreSignal(slot);
+      00035C 05 36            [12]  894 	INC _slot 
+      00035E 22               [24]  895 	ret
+      00035F                        896 00102$:
+                                    897 ;	testparking.c:126: LOG('c');
+      00035F 85 00 AF         [24]  898 	MOV _EA, 0x0 
+      000362                        899 	 23$:
+      000362 85 38 E0         [24]  900 	MOV ACC, _empty 
+      000365 20 E7 FA         [24]  901 	JB ACC.7, 23$ 
+      000368 60 F8            [24]  902 	JZ 23$ 
+      00036A 15 38            [12]  903 	DEC _empty 
+      00036C                        904 	 24$:
+      00036C 85 37 E0         [24]  905 	MOV ACC, _mutex 
+      00036F 20 E7 FA         [24]  906 	JB ACC.7, 24$ 
+      000372 60 F8            [24]  907 	JZ 24$ 
+      000374 15 37            [12]  908 	DEC _mutex 
+      000376 E5 34            [12]  909 	mov	a,_in
+      000378 24 39            [12]  910 	add	a,#_buff
+      00037A F8               [12]  911 	mov	r0,a
+      00037B 76 63            [12]  912 	mov	@r0,#0x63
+      00037D AE 34            [24]  913 	mov	r6,_in
+      00037F E5 34            [12]  914 	mov	a,_in
+      000381 33               [12]  915 	rlc	a
+      000382 95 E0            [12]  916 	subb	a,acc
+      000384 FF               [12]  917 	mov	r7,a
+      000385 8E 82            [24]  918 	mov	dpl,r6
+      000387 8F 83            [24]  919 	mov	dph,r7
+      000389 A3               [24]  920 	inc	dptr
+      00038A 75*00 07         [24]  921 	mov	__modsint_PARM_2,#0x07
+      00038D 75*01 00         [24]  922 	mov	(__modsint_PARM_2 + 1),#0x00
+      000390 12r00r00         [24]  923 	lcall	__modsint
+      000393 AE 82            [24]  924 	mov	r6,dpl
+      000395 AF 83            [24]  925 	mov	r7,dph
+      000397 8E 34            [24]  926 	mov	_in,r6
+      000399 05 37            [12]  927 	INC _mutex 
+      00039B 85 01 AF         [24]  928 	MOV _EA, 0x1 
+                                    929 ;	testparking.c:127: spot |= (3 << 4);
+      00039E 43 33 30         [24]  930 	orl	_spot,#0x30
+                                    931 ;	testparking.c:128: delay(C_DELAY);
+      0003A1 75 82 02         [24]  932 	mov	dpl,#0x02
+      0003A4 12r00r00         [24]  933 	lcall	_delay
+                                    934 ;	testparking.c:129: LOG('c');
+      0003A7 85 00 AF         [24]  935 	MOV _EA, 0x0 
+      0003AA                        936 	 25$:
+      0003AA 85 38 E0         [24]  937 	MOV ACC, _empty 
+      0003AD 20 E7 FA         [24]  938 	JB ACC.7, 25$ 
+      0003B0 60 F8            [24]  939 	JZ 25$ 
+      0003B2 15 38            [12]  940 	DEC _empty 
+      0003B4                        941 	 26$:
+      0003B4 85 37 E0         [24]  942 	MOV ACC, _mutex 
+      0003B7 20 E7 FA         [24]  943 	JB ACC.7, 26$ 
+      0003BA 60 F8            [24]  944 	JZ 26$ 
+      0003BC 15 37            [12]  945 	DEC _mutex 
+      0003BE E5 34            [12]  946 	mov	a,_in
+      0003C0 24 39            [12]  947 	add	a,#_buff
+      0003C2 F8               [12]  948 	mov	r0,a
+      0003C3 76 63            [12]  949 	mov	@r0,#0x63
+      0003C5 AE 34            [24]  950 	mov	r6,_in
+      0003C7 E5 34            [12]  951 	mov	a,_in
+      0003C9 33               [12]  952 	rlc	a
+      0003CA 95 E0            [12]  953 	subb	a,acc
+      0003CC FF               [12]  954 	mov	r7,a
+      0003CD 8E 82            [24]  955 	mov	dpl,r6
+      0003CF 8F 83            [24]  956 	mov	dph,r7
+      0003D1 A3               [24]  957 	inc	dptr
+      0003D2 75*00 07         [24]  958 	mov	__modsint_PARM_2,#0x07
+      0003D5 75*01 00         [24]  959 	mov	(__modsint_PARM_2 + 1),#0x00
+      0003D8 12r00r00         [24]  960 	lcall	__modsint
+      0003DB AE 82            [24]  961 	mov	r6,dpl
+      0003DD AF 83            [24]  962 	mov	r7,dph
+      0003DF 8E 34            [24]  963 	mov	_in,r6
+      0003E1 05 37            [12]  964 	INC _mutex 
+      0003E3 85 01 AF         [24]  965 	MOV _EA, 0x1 
+                                    966 ;	testparking.c:130: spot &= (~0xF0);
+      0003E6 53 33 0F         [24]  967 	anl	_spot,#0x0F
+                                    968 ;	testparking.c:131: SemaphoreSignal(slot);
+      0003E9 05 36            [12]  969 	INC _slot 
+      0003EB 22               [24]  970 	ret
+                                    971 ;------------------------------------------------------------
+                                    972 ;Allocation info for local variables in function 'CarD'
+                                    973 ;------------------------------------------------------------
+                                    974 ;	testparking.c:134: void CarD(void)
+                                    975 ;	-----------------------------------------
+                                    976 ;	 function CarD
+                                    977 ;	-----------------------------------------
+      0003EC                        978 _CarD:
+                                    979 ;	testparking.c:136: SemaphoreWait(slot);
+      0003EC                        980 	 27$:
+      0003EC 85 36 E0         [24]  981 	MOV ACC, _slot 
+      0003EF 20 E7 FA         [24]  982 	JB ACC.7, 27$ 
+      0003F2 60 F8            [24]  983 	JZ 27$ 
+      0003F4 15 36            [12]  984 	DEC _slot 
+                                    985 ;	testparking.c:137: if(!(spot & 0x0F)){
+      0003F6 E5 33            [12]  986 	mov	a,_spot
+      0003F8 54 0F            [12]  987 	anl	a,#0x0F
+      0003FA 60 03            [24]  988 	jz	00110$
+      0003FC 02r04r8C         [24]  989 	ljmp	00102$
+      0003FF                        990 00110$:
+                                    991 ;	testparking.c:138: LOG('D');
+      0003FF 85 00 AF         [24]  992 	MOV _EA, 0x0 
+      000402                        993 	 28$:
+      000402 85 38 E0         [24]  994 	MOV ACC, _empty 
+      000405 20 E7 FA         [24]  995 	JB ACC.7, 28$ 
+      000408 60 F8            [24]  996 	JZ 28$ 
+      00040A 15 38            [12]  997 	DEC _empty 
+      00040C                        998 	 29$:
+      00040C 85 37 E0         [24]  999 	MOV ACC, _mutex 
+      00040F 20 E7 FA         [24] 1000 	JB ACC.7, 29$ 
+      000412 60 F8            [24] 1001 	JZ 29$ 
+      000414 15 37            [12] 1002 	DEC _mutex 
+      000416 E5 34            [12] 1003 	mov	a,_in
+      000418 24 39            [12] 1004 	add	a,#_buff
+      00041A F8               [12] 1005 	mov	r0,a
+      00041B 76 44            [12] 1006 	mov	@r0,#0x44
+      00041D AE 34            [24] 1007 	mov	r6,_in
+      00041F E5 34            [12] 1008 	mov	a,_in
+      000421 33               [12] 1009 	rlc	a
+      000422 95 E0            [12] 1010 	subb	a,acc
+      000424 FF               [12] 1011 	mov	r7,a
+      000425 8E 82            [24] 1012 	mov	dpl,r6
+      000427 8F 83            [24] 1013 	mov	dph,r7
+      000429 A3               [24] 1014 	inc	dptr
+      00042A 75*00 07         [24] 1015 	mov	__modsint_PARM_2,#0x07
+      00042D 75*01 00         [24] 1016 	mov	(__modsint_PARM_2 + 1),#0x00
+      000430 12r00r00         [24] 1017 	lcall	__modsint
+      000433 AE 82            [24] 1018 	mov	r6,dpl
+      000435 AF 83            [24] 1019 	mov	r7,dph
+      000437 8E 34            [24] 1020 	mov	_in,r6
+      000439 05 37            [12] 1021 	INC _mutex 
+      00043B 85 01 AF         [24] 1022 	MOV _EA, 0x1 
+                                   1023 ;	testparking.c:139: spot |= 4;
+      00043E 43 33 04         [24] 1024 	orl	_spot,#0x04
+                                   1025 ;	testparking.c:140: delay(D_DELAY);
+      000441 75 82 03         [24] 1026 	mov	dpl,#0x03
+      000444 12r00r00         [24] 1027 	lcall	_delay
+                                   1028 ;	testparking.c:141: LOG('D');
+      000447 85 00 AF         [24] 1029 	MOV _EA, 0x0 
+      00044A                       1030 	 30$:
+      00044A 85 38 E0         [24] 1031 	MOV ACC, _empty 
+      00044D 20 E7 FA         [24] 1032 	JB ACC.7, 30$ 
+      000450 60 F8            [24] 1033 	JZ 30$ 
+      000452 15 38            [12] 1034 	DEC _empty 
+      000454                       1035 	 31$:
+      000454 85 37 E0         [24] 1036 	MOV ACC, _mutex 
+      000457 20 E7 FA         [24] 1037 	JB ACC.7, 31$ 
+      00045A 60 F8            [24] 1038 	JZ 31$ 
+      00045C 15 37            [12] 1039 	DEC _mutex 
+      00045E E5 34            [12] 1040 	mov	a,_in
+      000460 24 39            [12] 1041 	add	a,#_buff
+      000462 F8               [12] 1042 	mov	r0,a
+      000463 76 44            [12] 1043 	mov	@r0,#0x44
+      000465 AE 34            [24] 1044 	mov	r6,_in
+      000467 E5 34            [12] 1045 	mov	a,_in
+      000469 33               [12] 1046 	rlc	a
+      00046A 95 E0            [12] 1047 	subb	a,acc
+      00046C FF               [12] 1048 	mov	r7,a
+      00046D 8E 82            [24] 1049 	mov	dpl,r6
+      00046F 8F 83            [24] 1050 	mov	dph,r7
+      000471 A3               [24] 1051 	inc	dptr
+      000472 75*00 07         [24] 1052 	mov	__modsint_PARM_2,#0x07
+      000475 75*01 00         [24] 1053 	mov	(__modsint_PARM_2 + 1),#0x00
+      000478 12r00r00         [24] 1054 	lcall	__modsint
+      00047B AE 82            [24] 1055 	mov	r6,dpl
+      00047D AF 83            [24] 1056 	mov	r7,dph
+      00047F 8E 34            [24] 1057 	mov	_in,r6
+      000481 05 37            [12] 1058 	INC _mutex 
+      000483 85 01 AF         [24] 1059 	MOV _EA, 0x1 
+                                   1060 ;	testparking.c:142: spot &= (~0x0F);
+      000486 53 33 F0         [24] 1061 	anl	_spot,#0xF0
+                                   1062 ;	testparking.c:143: SemaphoreSignal(slot);
+      000489 05 36            [12] 1063 	INC _slot 
+      00048B 22               [24] 1064 	ret
+      00048C                       1065 00102$:
+                                   1066 ;	testparking.c:146: LOG('d');
+      00048C 85 00 AF         [24] 1067 	MOV _EA, 0x0 
+      00048F                       1068 	 32$:
+      00048F 85 38 E0         [24] 1069 	MOV ACC, _empty 
+      000492 20 E7 FA         [24] 1070 	JB ACC.7, 32$ 
+      000495 60 F8            [24] 1071 	JZ 32$ 
+      000497 15 38            [12] 1072 	DEC _empty 
+      000499                       1073 	 33$:
+      000499 85 37 E0         [24] 1074 	MOV ACC, _mutex 
+      00049C 20 E7 FA         [24] 1075 	JB ACC.7, 33$ 
+      00049F 60 F8            [24] 1076 	JZ 33$ 
+      0004A1 15 37            [12] 1077 	DEC _mutex 
+      0004A3 E5 34            [12] 1078 	mov	a,_in
+      0004A5 24 39            [12] 1079 	add	a,#_buff
+      0004A7 F8               [12] 1080 	mov	r0,a
+      0004A8 76 64            [12] 1081 	mov	@r0,#0x64
+      0004AA AE 34            [24] 1082 	mov	r6,_in
+      0004AC E5 34            [12] 1083 	mov	a,_in
+      0004AE 33               [12] 1084 	rlc	a
+      0004AF 95 E0            [12] 1085 	subb	a,acc
+      0004B1 FF               [12] 1086 	mov	r7,a
+      0004B2 8E 82            [24] 1087 	mov	dpl,r6
+      0004B4 8F 83            [24] 1088 	mov	dph,r7
+      0004B6 A3               [24] 1089 	inc	dptr
+      0004B7 75*00 07         [24] 1090 	mov	__modsint_PARM_2,#0x07
+      0004BA 75*01 00         [24] 1091 	mov	(__modsint_PARM_2 + 1),#0x00
+      0004BD 12r00r00         [24] 1092 	lcall	__modsint
+      0004C0 AE 82            [24] 1093 	mov	r6,dpl
+      0004C2 AF 83            [24] 1094 	mov	r7,dph
+      0004C4 8E 34            [24] 1095 	mov	_in,r6
+      0004C6 05 37            [12] 1096 	INC _mutex 
+      0004C8 85 01 AF         [24] 1097 	MOV _EA, 0x1 
+                                   1098 ;	testparking.c:147: spot |= (4 << 4);
+      0004CB 43 33 40         [24] 1099 	orl	_spot,#0x40
+                                   1100 ;	testparking.c:148: delay(D_DELAY);
+      0004CE 75 82 03         [24] 1101 	mov	dpl,#0x03
+      0004D1 12r00r00         [24] 1102 	lcall	_delay
+                                   1103 ;	testparking.c:149: LOG('d');
+      0004D4 85 00 AF         [24] 1104 	MOV _EA, 0x0 
+      0004D7                       1105 	 34$:
+      0004D7 85 38 E0         [24] 1106 	MOV ACC, _empty 
+      0004DA 20 E7 FA         [24] 1107 	JB ACC.7, 34$ 
+      0004DD 60 F8            [24] 1108 	JZ 34$ 
+      0004DF 15 38            [12] 1109 	DEC _empty 
+      0004E1                       1110 	 35$:
+      0004E1 85 37 E0         [24] 1111 	MOV ACC, _mutex 
+      0004E4 20 E7 FA         [24] 1112 	JB ACC.7, 35$ 
+      0004E7 60 F8            [24] 1113 	JZ 35$ 
+      0004E9 15 37            [12] 1114 	DEC _mutex 
+      0004EB E5 34            [12] 1115 	mov	a,_in
+      0004ED 24 39            [12] 1116 	add	a,#_buff
+      0004EF F8               [12] 1117 	mov	r0,a
+      0004F0 76 64            [12] 1118 	mov	@r0,#0x64
+      0004F2 AE 34            [24] 1119 	mov	r6,_in
+      0004F4 E5 34            [12] 1120 	mov	a,_in
+      0004F6 33               [12] 1121 	rlc	a
+      0004F7 95 E0            [12] 1122 	subb	a,acc
+      0004F9 FF               [12] 1123 	mov	r7,a
+      0004FA 8E 82            [24] 1124 	mov	dpl,r6
+      0004FC 8F 83            [24] 1125 	mov	dph,r7
+      0004FE A3               [24] 1126 	inc	dptr
+      0004FF 75*00 07         [24] 1127 	mov	__modsint_PARM_2,#0x07
+      000502 75*01 00         [24] 1128 	mov	(__modsint_PARM_2 + 1),#0x00
+      000505 12r00r00         [24] 1129 	lcall	__modsint
+      000508 AE 82            [24] 1130 	mov	r6,dpl
+      00050A AF 83            [24] 1131 	mov	r7,dph
+      00050C 8E 34            [24] 1132 	mov	_in,r6
+      00050E 05 37            [12] 1133 	INC _mutex 
+      000510 85 01 AF         [24] 1134 	MOV _EA, 0x1 
+                                   1135 ;	testparking.c:150: spot &= (~0xF0);
+      000513 53 33 0F         [24] 1136 	anl	_spot,#0x0F
+                                   1137 ;	testparking.c:151: SemaphoreSignal(slot);
+      000516 05 36            [12] 1138 	INC _slot 
+      000518 22               [24] 1139 	ret
+                                   1140 ;------------------------------------------------------------
+                                   1141 ;Allocation info for local variables in function 'CarE'
+                                   1142 ;------------------------------------------------------------
+                                   1143 ;	testparking.c:154: void CarE(void)
+                                   1144 ;	-----------------------------------------
+                                   1145 ;	 function CarE
+                                   1146 ;	-----------------------------------------
+      000519                       1147 _CarE:
+                                   1148 ;	testparking.c:156: SemaphoreWait(slot);
+      000519                       1149 	 36$:
+      000519 85 36 E0         [24] 1150 	MOV ACC, _slot 
+      00051C 20 E7 FA         [24] 1151 	JB ACC.7, 36$ 
+      00051F 60 F8            [24] 1152 	JZ 36$ 
+      000521 15 36            [12] 1153 	DEC _slot 
+                                   1154 ;	testparking.c:157: if(!(spot & 0x0F)){
+      000523 E5 33            [12] 1155 	mov	a,_spot
+      000525 54 0F            [12] 1156 	anl	a,#0x0F
+      000527 60 03            [24] 1157 	jz	00110$
+      000529 02r05rB9         [24] 1158 	ljmp	00102$
+      00052C                       1159 00110$:
+                                   1160 ;	testparking.c:158: LOG('E');
+      00052C 85 00 AF         [24] 1161 	MOV _EA, 0x0 
+      00052F                       1162 	 37$:
+      00052F 85 38 E0         [24] 1163 	MOV ACC, _empty 
+      000532 20 E7 FA         [24] 1164 	JB ACC.7, 37$ 
+      000535 60 F8            [24] 1165 	JZ 37$ 
+      000537 15 38            [12] 1166 	DEC _empty 
+      000539                       1167 	 38$:
+      000539 85 37 E0         [24] 1168 	MOV ACC, _mutex 
+      00053C 20 E7 FA         [24] 1169 	JB ACC.7, 38$ 
+      00053F 60 F8            [24] 1170 	JZ 38$ 
+      000541 15 37            [12] 1171 	DEC _mutex 
+      000543 E5 34            [12] 1172 	mov	a,_in
+      000545 24 39            [12] 1173 	add	a,#_buff
+      000547 F8               [12] 1174 	mov	r0,a
+      000548 76 45            [12] 1175 	mov	@r0,#0x45
+      00054A AE 34            [24] 1176 	mov	r6,_in
+      00054C E5 34            [12] 1177 	mov	a,_in
+      00054E 33               [12] 1178 	rlc	a
+      00054F 95 E0            [12] 1179 	subb	a,acc
+      000551 FF               [12] 1180 	mov	r7,a
+      000552 8E 82            [24] 1181 	mov	dpl,r6
+      000554 8F 83            [24] 1182 	mov	dph,r7
+      000556 A3               [24] 1183 	inc	dptr
+      000557 75*00 07         [24] 1184 	mov	__modsint_PARM_2,#0x07
+      00055A 75*01 00         [24] 1185 	mov	(__modsint_PARM_2 + 1),#0x00
+      00055D 12r00r00         [24] 1186 	lcall	__modsint
+      000560 AE 82            [24] 1187 	mov	r6,dpl
+      000562 AF 83            [24] 1188 	mov	r7,dph
+      000564 8E 34            [24] 1189 	mov	_in,r6
+      000566 05 37            [12] 1190 	INC _mutex 
+      000568 85 01 AF         [24] 1191 	MOV _EA, 0x1 
+                                   1192 ;	testparking.c:159: spot |= 5;
+      00056B 43 33 05         [24] 1193 	orl	_spot,#0x05
+                                   1194 ;	testparking.c:160: delay(E_DELAY);
+      00056E 75 82 01         [24] 1195 	mov	dpl,#0x01
+      000571 12r00r00         [24] 1196 	lcall	_delay
+                                   1197 ;	testparking.c:161: LOG('E');
+      000574 85 00 AF         [24] 1198 	MOV _EA, 0x0 
+      000577                       1199 	 39$:
+      000577 85 38 E0         [24] 1200 	MOV ACC, _empty 
+      00057A 20 E7 FA         [24] 1201 	JB ACC.7, 39$ 
+      00057D 60 F8            [24] 1202 	JZ 39$ 
+      00057F 15 38            [12] 1203 	DEC _empty 
+      000581                       1204 	 40$:
+      000581 85 37 E0         [24] 1205 	MOV ACC, _mutex 
+      000584 20 E7 FA         [24] 1206 	JB ACC.7, 40$ 
+      000587 60 F8            [24] 1207 	JZ 40$ 
+      000589 15 37            [12] 1208 	DEC _mutex 
+      00058B E5 34            [12] 1209 	mov	a,_in
+      00058D 24 39            [12] 1210 	add	a,#_buff
+      00058F F8               [12] 1211 	mov	r0,a
+      000590 76 45            [12] 1212 	mov	@r0,#0x45
+      000592 AE 34            [24] 1213 	mov	r6,_in
+      000594 E5 34            [12] 1214 	mov	a,_in
+      000596 33               [12] 1215 	rlc	a
+      000597 95 E0            [12] 1216 	subb	a,acc
+      000599 FF               [12] 1217 	mov	r7,a
+      00059A 8E 82            [24] 1218 	mov	dpl,r6
+      00059C 8F 83            [24] 1219 	mov	dph,r7
+      00059E A3               [24] 1220 	inc	dptr
+      00059F 75*00 07         [24] 1221 	mov	__modsint_PARM_2,#0x07
+      0005A2 75*01 00         [24] 1222 	mov	(__modsint_PARM_2 + 1),#0x00
+      0005A5 12r00r00         [24] 1223 	lcall	__modsint
+      0005A8 AE 82            [24] 1224 	mov	r6,dpl
+      0005AA AF 83            [24] 1225 	mov	r7,dph
+      0005AC 8E 34            [24] 1226 	mov	_in,r6
+      0005AE 05 37            [12] 1227 	INC _mutex 
+      0005B0 85 01 AF         [24] 1228 	MOV _EA, 0x1 
+                                   1229 ;	testparking.c:162: spot &= (~0x0F);
+      0005B3 53 33 F0         [24] 1230 	anl	_spot,#0xF0
+                                   1231 ;	testparking.c:163: SemaphoreSignal(slot);
+      0005B6 05 36            [12] 1232 	INC _slot 
+      0005B8 22               [24] 1233 	ret
+      0005B9                       1234 00102$:
+                                   1235 ;	testparking.c:166: LOG('e');
+      0005B9 85 00 AF         [24] 1236 	MOV _EA, 0x0 
+      0005BC                       1237 	 41$:
+      0005BC 85 38 E0         [24] 1238 	MOV ACC, _empty 
+      0005BF 20 E7 FA         [24] 1239 	JB ACC.7, 41$ 
+      0005C2 60 F8            [24] 1240 	JZ 41$ 
+      0005C4 15 38            [12] 1241 	DEC _empty 
+      0005C6                       1242 	 42$:
+      0005C6 85 37 E0         [24] 1243 	MOV ACC, _mutex 
+      0005C9 20 E7 FA         [24] 1244 	JB ACC.7, 42$ 
+      0005CC 60 F8            [24] 1245 	JZ 42$ 
+      0005CE 15 37            [12] 1246 	DEC _mutex 
+      0005D0 E5 34            [12] 1247 	mov	a,_in
+      0005D2 24 39            [12] 1248 	add	a,#_buff
+      0005D4 F8               [12] 1249 	mov	r0,a
+      0005D5 76 65            [12] 1250 	mov	@r0,#0x65
+      0005D7 AE 34            [24] 1251 	mov	r6,_in
+      0005D9 E5 34            [12] 1252 	mov	a,_in
+      0005DB 33               [12] 1253 	rlc	a
+      0005DC 95 E0            [12] 1254 	subb	a,acc
+      0005DE FF               [12] 1255 	mov	r7,a
+      0005DF 8E 82            [24] 1256 	mov	dpl,r6
+      0005E1 8F 83            [24] 1257 	mov	dph,r7
+      0005E3 A3               [24] 1258 	inc	dptr
+      0005E4 75*00 07         [24] 1259 	mov	__modsint_PARM_2,#0x07
+      0005E7 75*01 00         [24] 1260 	mov	(__modsint_PARM_2 + 1),#0x00
+      0005EA 12r00r00         [24] 1261 	lcall	__modsint
+      0005ED AE 82            [24] 1262 	mov	r6,dpl
+      0005EF AF 83            [24] 1263 	mov	r7,dph
+      0005F1 8E 34            [24] 1264 	mov	_in,r6
+      0005F3 05 37            [12] 1265 	INC _mutex 
+      0005F5 85 01 AF         [24] 1266 	MOV _EA, 0x1 
+                                   1267 ;	testparking.c:167: spot |= (5 << 4);
+      0005F8 43 33 50         [24] 1268 	orl	_spot,#0x50
+                                   1269 ;	testparking.c:168: delay(E_DELAY);
+      0005FB 75 82 01         [24] 1270 	mov	dpl,#0x01
+      0005FE 12r00r00         [24] 1271 	lcall	_delay
+                                   1272 ;	testparking.c:169: LOG('e');
+      000601 85 00 AF         [24] 1273 	MOV _EA, 0x0 
+      000604                       1274 	 43$:
+      000604 85 38 E0         [24] 1275 	MOV ACC, _empty 
+      000607 20 E7 FA         [24] 1276 	JB ACC.7, 43$ 
+      00060A 60 F8            [24] 1277 	JZ 43$ 
+      00060C 15 38            [12] 1278 	DEC _empty 
+      00060E                       1279 	 44$:
+      00060E 85 37 E0         [24] 1280 	MOV ACC, _mutex 
+      000611 20 E7 FA         [24] 1281 	JB ACC.7, 44$ 
+      000614 60 F8            [24] 1282 	JZ 44$ 
+      000616 15 37            [12] 1283 	DEC _mutex 
+      000618 E5 34            [12] 1284 	mov	a,_in
+      00061A 24 39            [12] 1285 	add	a,#_buff
+      00061C F8               [12] 1286 	mov	r0,a
+      00061D 76 65            [12] 1287 	mov	@r0,#0x65
+      00061F AE 34            [24] 1288 	mov	r6,_in
+      000621 E5 34            [12] 1289 	mov	a,_in
+      000623 33               [12] 1290 	rlc	a
+      000624 95 E0            [12] 1291 	subb	a,acc
+      000626 FF               [12] 1292 	mov	r7,a
+      000627 8E 82            [24] 1293 	mov	dpl,r6
+      000629 8F 83            [24] 1294 	mov	dph,r7
+      00062B A3               [24] 1295 	inc	dptr
+      00062C 75*00 07         [24] 1296 	mov	__modsint_PARM_2,#0x07
+      00062F 75*01 00         [24] 1297 	mov	(__modsint_PARM_2 + 1),#0x00
+      000632 12r00r00         [24] 1298 	lcall	__modsint
+      000635 AE 82            [24] 1299 	mov	r6,dpl
+      000637 AF 83            [24] 1300 	mov	r7,dph
+      000639 8E 34            [24] 1301 	mov	_in,r6
+      00063B 05 37            [12] 1302 	INC _mutex 
+      00063D 85 01 AF         [24] 1303 	MOV _EA, 0x1 
+                                   1304 ;	testparking.c:170: spot &= (~0xF0);
+      000640 53 33 0F         [24] 1305 	anl	_spot,#0x0F
+                                   1306 ;	testparking.c:171: SemaphoreSignal(slot);
+      000643 05 36            [12] 1307 	INC _slot 
+      000645 22               [24] 1308 	ret
+                                   1309 	.area CSEG    (CODE)
+                                   1310 	.area CONST   (CODE)
+                                   1311 	.area XINIT   (CODE)
+                                   1312 	.area CABS    (ABS,CODE)

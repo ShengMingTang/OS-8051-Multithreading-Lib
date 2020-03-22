@@ -1,0 +1,983 @@
+                                      1 ;--------------------------------------------------------
+                                      2 ; File Created by SDCC : free open source ANSI-C Compiler
+                                      3 ; Version 3.5.0 #9253 (Apr  3 2018) (Linux)
+                                      4 ; This file was generated Wed Jan 15 13:09:18 2020
+                                      5 ;--------------------------------------------------------
+                                      6 	.module preemptive
+                                      7 	.optsdcc -mmcs51 --model-small
+                                      8 	
+                                      9 ;--------------------------------------------------------
+                                     10 ; Public variables in this module
+                                     11 ;--------------------------------------------------------
+                                     12 	.globl _Bootstrap
+                                     13 	.globl _main
+                                     14 	.globl _CY
+                                     15 	.globl _AC
+                                     16 	.globl _F0
+                                     17 	.globl _RS1
+                                     18 	.globl _RS0
+                                     19 	.globl _OV
+                                     20 	.globl _F1
+                                     21 	.globl _P
+                                     22 	.globl _PS
+                                     23 	.globl _PT1
+                                     24 	.globl _PX1
+                                     25 	.globl _PT0
+                                     26 	.globl _PX0
+                                     27 	.globl _RD
+                                     28 	.globl _WR
+                                     29 	.globl _T1
+                                     30 	.globl _T0
+                                     31 	.globl _INT1
+                                     32 	.globl _INT0
+                                     33 	.globl _TXD
+                                     34 	.globl _RXD
+                                     35 	.globl _P3_7
+                                     36 	.globl _P3_6
+                                     37 	.globl _P3_5
+                                     38 	.globl _P3_4
+                                     39 	.globl _P3_3
+                                     40 	.globl _P3_2
+                                     41 	.globl _P3_1
+                                     42 	.globl _P3_0
+                                     43 	.globl _EA
+                                     44 	.globl _ES
+                                     45 	.globl _ET1
+                                     46 	.globl _EX1
+                                     47 	.globl _ET0
+                                     48 	.globl _EX0
+                                     49 	.globl _P2_7
+                                     50 	.globl _P2_6
+                                     51 	.globl _P2_5
+                                     52 	.globl _P2_4
+                                     53 	.globl _P2_3
+                                     54 	.globl _P2_2
+                                     55 	.globl _P2_1
+                                     56 	.globl _P2_0
+                                     57 	.globl _SM0
+                                     58 	.globl _SM1
+                                     59 	.globl _SM2
+                                     60 	.globl _REN
+                                     61 	.globl _TB8
+                                     62 	.globl _RB8
+                                     63 	.globl _TI
+                                     64 	.globl _RI
+                                     65 	.globl _P1_7
+                                     66 	.globl _P1_6
+                                     67 	.globl _P1_5
+                                     68 	.globl _P1_4
+                                     69 	.globl _P1_3
+                                     70 	.globl _P1_2
+                                     71 	.globl _P1_1
+                                     72 	.globl _P1_0
+                                     73 	.globl _TF1
+                                     74 	.globl _TR1
+                                     75 	.globl _TF0
+                                     76 	.globl _TR0
+                                     77 	.globl _IE1
+                                     78 	.globl _IT1
+                                     79 	.globl _IE0
+                                     80 	.globl _IT0
+                                     81 	.globl _P0_7
+                                     82 	.globl _P0_6
+                                     83 	.globl _P0_5
+                                     84 	.globl _P0_4
+                                     85 	.globl _P0_3
+                                     86 	.globl _P0_2
+                                     87 	.globl _P0_1
+                                     88 	.globl _P0_0
+                                     89 	.globl _B
+                                     90 	.globl _ACC
+                                     91 	.globl _PSW
+                                     92 	.globl _IP
+                                     93 	.globl _P3
+                                     94 	.globl _IE
+                                     95 	.globl _P2
+                                     96 	.globl _SBUF
+                                     97 	.globl _SCON
+                                     98 	.globl _P1
+                                     99 	.globl _TH1
+                                    100 	.globl _TH0
+                                    101 	.globl _TL1
+                                    102 	.globl _TL0
+                                    103 	.globl _TMOD
+                                    104 	.globl _TCON
+                                    105 	.globl _PCON
+                                    106 	.globl _DPH
+                                    107 	.globl _DPL
+                                    108 	.globl _SP
+                                    109 	.globl _P0
+                                    110 	.globl _i
+                                    111 	.globl _ThreadManager
+                                    112 	.globl _delay
+                                    113 	.globl _myTimer0Handler
+                                    114 	.globl _ThreadCreate
+                                    115 	.globl _ThreadYield
+                                    116 	.globl _ThreadExit
+                                    117 	.globl _now
+                                    118 ;--------------------------------------------------------
+                                    119 ; special function registers
+                                    120 ;--------------------------------------------------------
+                                    121 	.area RSEG    (ABS,DATA)
+      000000                        122 	.org 0x0000
+                           000080   123 _P0	=	0x0080
+                           000081   124 _SP	=	0x0081
+                           000082   125 _DPL	=	0x0082
+                           000083   126 _DPH	=	0x0083
+                           000087   127 _PCON	=	0x0087
+                           000088   128 _TCON	=	0x0088
+                           000089   129 _TMOD	=	0x0089
+                           00008A   130 _TL0	=	0x008a
+                           00008B   131 _TL1	=	0x008b
+                           00008C   132 _TH0	=	0x008c
+                           00008D   133 _TH1	=	0x008d
+                           000090   134 _P1	=	0x0090
+                           000098   135 _SCON	=	0x0098
+                           000099   136 _SBUF	=	0x0099
+                           0000A0   137 _P2	=	0x00a0
+                           0000A8   138 _IE	=	0x00a8
+                           0000B0   139 _P3	=	0x00b0
+                           0000B8   140 _IP	=	0x00b8
+                           0000D0   141 _PSW	=	0x00d0
+                           0000E0   142 _ACC	=	0x00e0
+                           0000F0   143 _B	=	0x00f0
+                                    144 ;--------------------------------------------------------
+                                    145 ; special function bits
+                                    146 ;--------------------------------------------------------
+                                    147 	.area RSEG    (ABS,DATA)
+      000000                        148 	.org 0x0000
+                           000080   149 _P0_0	=	0x0080
+                           000081   150 _P0_1	=	0x0081
+                           000082   151 _P0_2	=	0x0082
+                           000083   152 _P0_3	=	0x0083
+                           000084   153 _P0_4	=	0x0084
+                           000085   154 _P0_5	=	0x0085
+                           000086   155 _P0_6	=	0x0086
+                           000087   156 _P0_7	=	0x0087
+                           000088   157 _IT0	=	0x0088
+                           000089   158 _IE0	=	0x0089
+                           00008A   159 _IT1	=	0x008a
+                           00008B   160 _IE1	=	0x008b
+                           00008C   161 _TR0	=	0x008c
+                           00008D   162 _TF0	=	0x008d
+                           00008E   163 _TR1	=	0x008e
+                           00008F   164 _TF1	=	0x008f
+                           000090   165 _P1_0	=	0x0090
+                           000091   166 _P1_1	=	0x0091
+                           000092   167 _P1_2	=	0x0092
+                           000093   168 _P1_3	=	0x0093
+                           000094   169 _P1_4	=	0x0094
+                           000095   170 _P1_5	=	0x0095
+                           000096   171 _P1_6	=	0x0096
+                           000097   172 _P1_7	=	0x0097
+                           000098   173 _RI	=	0x0098
+                           000099   174 _TI	=	0x0099
+                           00009A   175 _RB8	=	0x009a
+                           00009B   176 _TB8	=	0x009b
+                           00009C   177 _REN	=	0x009c
+                           00009D   178 _SM2	=	0x009d
+                           00009E   179 _SM1	=	0x009e
+                           00009F   180 _SM0	=	0x009f
+                           0000A0   181 _P2_0	=	0x00a0
+                           0000A1   182 _P2_1	=	0x00a1
+                           0000A2   183 _P2_2	=	0x00a2
+                           0000A3   184 _P2_3	=	0x00a3
+                           0000A4   185 _P2_4	=	0x00a4
+                           0000A5   186 _P2_5	=	0x00a5
+                           0000A6   187 _P2_6	=	0x00a6
+                           0000A7   188 _P2_7	=	0x00a7
+                           0000A8   189 _EX0	=	0x00a8
+                           0000A9   190 _ET0	=	0x00a9
+                           0000AA   191 _EX1	=	0x00aa
+                           0000AB   192 _ET1	=	0x00ab
+                           0000AC   193 _ES	=	0x00ac
+                           0000AF   194 _EA	=	0x00af
+                           0000B0   195 _P3_0	=	0x00b0
+                           0000B1   196 _P3_1	=	0x00b1
+                           0000B2   197 _P3_2	=	0x00b2
+                           0000B3   198 _P3_3	=	0x00b3
+                           0000B4   199 _P3_4	=	0x00b4
+                           0000B5   200 _P3_5	=	0x00b5
+                           0000B6   201 _P3_6	=	0x00b6
+                           0000B7   202 _P3_7	=	0x00b7
+                           0000B0   203 _RXD	=	0x00b0
+                           0000B1   204 _TXD	=	0x00b1
+                           0000B2   205 _INT0	=	0x00b2
+                           0000B3   206 _INT1	=	0x00b3
+                           0000B4   207 _T0	=	0x00b4
+                           0000B5   208 _T1	=	0x00b5
+                           0000B6   209 _WR	=	0x00b6
+                           0000B7   210 _RD	=	0x00b7
+                           0000B8   211 _PX0	=	0x00b8
+                           0000B9   212 _PT0	=	0x00b9
+                           0000BA   213 _PX1	=	0x00ba
+                           0000BB   214 _PT1	=	0x00bb
+                           0000BC   215 _PS	=	0x00bc
+                           0000D0   216 _P	=	0x00d0
+                           0000D1   217 _F1	=	0x00d1
+                           0000D2   218 _OV	=	0x00d2
+                           0000D3   219 _RS0	=	0x00d3
+                           0000D4   220 _RS1	=	0x00d4
+                           0000D5   221 _F0	=	0x00d5
+                           0000D6   222 _AC	=	0x00d6
+                           0000D7   223 _CY	=	0x00d7
+                                    224 ;--------------------------------------------------------
+                                    225 ; overlayable register banks
+                                    226 ;--------------------------------------------------------
+                                    227 	.area REG_BANK_0	(REL,OVR,DATA)
+      000000                        228 	.ds 8
+                                    229 ;--------------------------------------------------------
+                                    230 ; internal ram data
+                                    231 ;--------------------------------------------------------
+                                    232 	.area DSEG    (DATA)
+                           000020   233 _SP_saved	=	0x0020
+                           000024   234 _thread_id	=	0x0024
+                           000025   235 _thread_bm	=	0x0025
+                           000026   236 _thread_ct	=	0x0026
+                           000027   237 _i	=	0x0027
+                           000028   238 _tmp	=	0x0028
+                           00002A   239 _last_thread	=	0x002a
+                           00002B   240 _time_elapsed	=	0x002b
+                           00002C   241 _time_quatum	=	0x002c
+                           00002D   242 _time_delay_record	=	0x002d
+                           00002F   243 _time_sem	=	0x002f
+                           000030   244 _time_remain	=	0x0030
+                                    245 ;--------------------------------------------------------
+                                    246 ; overlayable items in internal ram 
+                                    247 ;--------------------------------------------------------
+                                    248 	.area	OSEG    (OVR,DATA)
+                                    249 	.area	OSEG    (OVR,DATA)
+                                    250 ;--------------------------------------------------------
+                                    251 ; indirectly addressable internal ram data
+                                    252 ;--------------------------------------------------------
+                                    253 	.area ISEG    (DATA)
+                                    254 ;--------------------------------------------------------
+                                    255 ; absolute internal ram data
+                                    256 ;--------------------------------------------------------
+                                    257 	.area IABS    (ABS,DATA)
+                                    258 	.area IABS    (ABS,DATA)
+                                    259 ;--------------------------------------------------------
+                                    260 ; bit data
+                                    261 ;--------------------------------------------------------
+                                    262 	.area BSEG    (BIT)
+                                    263 ;--------------------------------------------------------
+                                    264 ; paged external ram data
+                                    265 ;--------------------------------------------------------
+                                    266 	.area PSEG    (PAG,XDATA)
+                                    267 ;--------------------------------------------------------
+                                    268 ; external ram data
+                                    269 ;--------------------------------------------------------
+                                    270 	.area XSEG    (XDATA)
+                                    271 ;--------------------------------------------------------
+                                    272 ; absolute external ram data
+                                    273 ;--------------------------------------------------------
+                                    274 	.area XABS    (ABS,XDATA)
+                                    275 ;--------------------------------------------------------
+                                    276 ; external initialized ram data
+                                    277 ;--------------------------------------------------------
+                                    278 	.area XISEG   (XDATA)
+                                    279 	.area HOME    (CODE)
+                                    280 	.area GSINIT0 (CODE)
+                                    281 	.area GSINIT1 (CODE)
+                                    282 	.area GSINIT2 (CODE)
+                                    283 	.area GSINIT3 (CODE)
+                                    284 	.area GSINIT4 (CODE)
+                                    285 	.area GSINIT5 (CODE)
+                                    286 	.area GSINIT  (CODE)
+                                    287 	.area GSFINAL (CODE)
+                                    288 	.area CSEG    (CODE)
+                                    289 ;--------------------------------------------------------
+                                    290 ; global & static initialisations
+                                    291 ;--------------------------------------------------------
+                                    292 	.area HOME    (CODE)
+                                    293 	.area GSINIT  (CODE)
+                                    294 	.area GSFINAL (CODE)
+                                    295 	.area GSINIT  (CODE)
+                                    296 ;--------------------------------------------------------
+                                    297 ; Home
+                                    298 ;--------------------------------------------------------
+                                    299 	.area HOME    (CODE)
+                                    300 	.area HOME    (CODE)
+                                    301 ;--------------------------------------------------------
+                                    302 ; code
+                                    303 ;--------------------------------------------------------
+                                    304 	.area CSEG    (CODE)
+                                    305 ;------------------------------------------------------------
+                                    306 ;Allocation info for local variables in function 'Bootstrap'
+                                    307 ;------------------------------------------------------------
+                                    308 ;	preemptive.c:52: void Bootstrap(void)
+                                    309 ;	-----------------------------------------
+                                    310 ;	 function Bootstrap
+                                    311 ;	-----------------------------------------
+      000000                        312 _Bootstrap:
+                           000007   313 	ar7 = 0x07
+                           000006   314 	ar6 = 0x06
+                           000005   315 	ar5 = 0x05
+                           000004   316 	ar4 = 0x04
+                           000003   317 	ar3 = 0x03
+                           000002   318 	ar2 = 0x02
+                           000001   319 	ar1 = 0x01
+                           000000   320 	ar0 = 0x00
+                                    321 ;	preemptive.c:56: __endasm;
+      000000 75 AF 00         [24]  322 	MOV _EA, #0
+                                    323 ;	preemptive.c:58: thread_bm = 0;
+      000003 75 25 00         [24]  324 	mov	_thread_bm,#0x00
+                                    325 ;	preemptive.c:59: SemaphoreCreate(thread_ct, MAXTHREADS);
+      000006 75 26 04         [24]  326 	mov	_thread_ct,#0x04
+                                    327 ;	preemptive.c:60: SemaphoreCreate(time_sem, 1);
+      000009 75 2F 01         [24]  328 	mov	_time_sem,#0x01
+                                    329 ;	preemptive.c:62: TMOD = 0;
+      00000C 75 89 00         [24]  330 	mov	_TMOD,#0x00
+                                    331 ;	preemptive.c:63: IE = 0x82;
+      00000F 75 A8 82         [24]  332 	mov	_IE,#0x82
+                                    333 ;	preemptive.c:64: TR0 = 1;
+      000012 D2 8C            [12]  334 	setb	_TR0
+                                    335 ;	preemptive.c:65: PSW = 0;
+      000014 75 D0 00         [24]  336 	mov	_PSW,#0x00
+                                    337 ;	preemptive.c:69: ThreadCreate(ThreadManager);
+      000017 90r00r46         [24]  338 	mov	dptr,#_ThreadManager
+      00001A 12r02r21         [24]  339 	lcall	_ThreadCreate
+                                    340 ;	preemptive.c:70: thread_id = ThreadCreate(&main);
+      00001D 90r00r00         [24]  341 	mov	dptr,#_main
+      000020 12r02r21         [24]  342 	lcall	_ThreadCreate
+      000023 85 82 24         [24]  343 	mov	_thread_id,dpl
+                                    344 ;	preemptive.c:71: last_thread = thread_id;
+      000026 85 24 2A         [24]  345 	mov	_last_thread,_thread_id
+                                    346 ;	preemptive.c:74: time_quatum = -1;
+      000029 75 2C FF         [24]  347 	mov	_time_quatum,#0xFF
+                                    348 ;	preemptive.c:75: time_elapsed = 0;
+                                    349 ;	preemptive.c:76: time_delay_record = 0;
+                                    350 ;	preemptive.c:78: RESTORESTATE;
+      00002C E4               [12]  351 	clr	a
+      00002D F5 2B            [12]  352 	mov	_time_elapsed,a
+      00002F F5 2D            [12]  353 	mov	_time_delay_record,a
+      000031 E5 24            [12]  354 	mov	a,_thread_id
+      000033 24 20            [12]  355 	add	a,#_SP_saved
+      000035 F9               [12]  356 	mov	r1,a
+      000036 87 81            [24]  357 	mov	_SP,@r1
+      000038 D0 D0            [24]  358 	POP PSW 
+      00003A D0 83            [24]  359 	POP DPH 
+      00003C D0 82            [24]  360 	POP DPL 
+      00003E D0 F0            [24]  361 	POP B 
+      000040 D0 E0            [24]  362 	POP ACC 
+                                    363 ;	preemptive.c:81: __endasm;
+      000042 75 AF 01         [24]  364 	MOV _EA, #1
+      000045 22               [24]  365 	ret
+                                    366 ;------------------------------------------------------------
+                                    367 ;Allocation info for local variables in function 'ThreadManager'
+                                    368 ;------------------------------------------------------------
+                                    369 ;	preemptive.c:83: void ThreadManager(void)
+                                    370 ;	-----------------------------------------
+                                    371 ;	 function ThreadManager
+                                    372 ;	-----------------------------------------
+      000046                        373 _ThreadManager:
+                                    374 ;	preemptive.c:85: while(1){
+      000046                        375 00102$:
+                                    376 ;	preemptive.c:86: ThreadYield();
+      000046 12r02rB6         [24]  377 	lcall	_ThreadYield
+      000049 80 FB            [24]  378 	sjmp	00102$
+                                    379 ;------------------------------------------------------------
+                                    380 ;Allocation info for local variables in function 'delay'
+                                    381 ;------------------------------------------------------------
+                                    382 ;n                         Allocated to registers 
+                                    383 ;------------------------------------------------------------
+                                    384 ;	preemptive.c:89: void delay(unsigned char n)
+                                    385 ;	-----------------------------------------
+                                    386 ;	 function delay
+                                    387 ;	-----------------------------------------
+      00004B                        388 _delay:
+                                    389 ;	preemptive.c:91: SemaphoreWait(time_sem);
+      00004B                        390 	 0$:
+      00004B 85 2F E0         [24]  391 	MOV ACC, _time_sem 
+      00004E 20 E7 FA         [24]  392 	JB ACC.7, 0$ 
+      000051 60 F8            [24]  393 	JZ 0$ 
+      000053 15 2F            [12]  394 	DEC _time_sem 
+                                    395 ;	preemptive.c:94: __endasm;
+      000055 75 AF 00         [24]  396 	MOV _EA, #0
+                                    397 ;	preemptive.c:95: tmp = 3 << (2 * thread_id);
+      000058 E5 24            [12]  398 	mov	a,_thread_id
+      00005A 25 E0            [12]  399 	add	a,acc
+      00005C FF               [12]  400 	mov	r7,a
+      00005D 8F F0            [24]  401 	mov	b,r7
+      00005F 05 F0            [12]  402 	inc	b
+      000061 74 03            [12]  403 	mov	a,#0x03
+      000063 80 02            [24]  404 	sjmp	00114$
+      000065                        405 00112$:
+      000065 25 E0            [12]  406 	add	a,acc
+      000067                        407 00114$:
+      000067 D5 F0 FB         [24]  408 	djnz	b,00112$
+      00006A F5 28            [12]  409 	mov	_tmp,a
+                                    410 ;	preemptive.c:96: time_delay_record &= (~tmp); // clear
+      00006C E5 28            [12]  411 	mov	a,_tmp
+      00006E F4               [12]  412 	cpl	a
+      00006F 52 2D            [12]  413 	anl	_time_delay_record,a
+                                    414 ;	preemptive.c:97: tmp = time_quatum << (2 * thread_id);
+      000071 E5 24            [12]  415 	mov	a,_thread_id
+      000073 25 E0            [12]  416 	add	a,acc
+      000075 FF               [12]  417 	mov	r7,a
+      000076 8F F0            [24]  418 	mov	b,r7
+      000078 05 F0            [12]  419 	inc	b
+      00007A E5 2C            [12]  420 	mov	a,_time_quatum
+      00007C 80 02            [24]  421 	sjmp	00117$
+      00007E                        422 00115$:
+      00007E 25 E0            [12]  423 	add	a,acc
+      000080                        424 00117$:
+      000080 D5 F0 FB         [24]  425 	djnz	b,00115$
+      000083 F5 28            [12]  426 	mov	_tmp,a
+                                    427 ;	preemptive.c:98: time_delay_record |= tmp;
+      000085 E5 28            [12]  428 	mov	a,_tmp
+      000087 42 2D            [12]  429 	orl	_time_delay_record,a
+                                    430 ;	preemptive.c:100: tmp = 1 << (4 + thread_id);
+      000089 74 04            [12]  431 	mov	a,#0x04
+      00008B 25 24            [12]  432 	add	a,_thread_id
+      00008D F5 F0            [12]  433 	mov	b,a
+      00008F 05 F0            [12]  434 	inc	b
+      000091 74 01            [12]  435 	mov	a,#0x01
+      000093 80 02            [24]  436 	sjmp	00120$
+      000095                        437 00118$:
+      000095 25 E0            [12]  438 	add	a,acc
+      000097                        439 00120$:
+      000097 D5 F0 FB         [24]  440 	djnz	b,00118$
+      00009A F5 28            [12]  441 	mov	_tmp,a
+                                    442 ;	preemptive.c:101: thread_bm &= (~tmp);
+      00009C E5 28            [12]  443 	mov	a,_tmp
+      00009E F4               [12]  444 	cpl	a
+      00009F FF               [12]  445 	mov	r7,a
+      0000A0 52 25            [12]  446 	anl	_thread_bm,a
+                                    447 ;	preemptive.c:102: thread_bm |= tmp;
+      0000A2 E5 28            [12]  448 	mov	a,_tmp
+      0000A4 42 25            [12]  449 	orl	_thread_bm,a
+                                    450 ;	preemptive.c:109: __endasm;
+      0000A6 E5 24            [12]  451 	MOV A, _thread_id
+      0000A8 14               [12]  452 	DEC A
+      0000A9 24 30            [12]  453 	ADD A, #_time_remain
+      0000AB F8               [12]  454 	MOV R0, A
+      0000AC A6 82            [24]  455 	MOV @R0, DPL
+                                    456 ;	preemptive.c:110: SemaphoreSignal(time_sem);
+      0000AE 05 2F            [12]  457 	INC _time_sem 
+                                    458 ;	preemptive.c:113: __endasm;
+      0000B0 75 AF 01         [24]  459 	MOV _EA, #1
+                                    460 ;	preemptive.c:115: while(time_remain[thread_id - 1]){
+      0000B3                        461 00101$:
+      0000B3 E5 24            [12]  462 	mov	a,_thread_id
+      0000B5 14               [12]  463 	dec	a
+      0000B6 24 30            [12]  464 	add	a,#_time_remain
+      0000B8 F9               [12]  465 	mov	r1,a
+      0000B9 E7               [12]  466 	mov	a,@r1
+      0000BA 70 F7            [24]  467 	jnz	00101$
+                                    468 ;	preemptive.c:118: SemaphoreWait(time_sem);
+      0000BC                        469 	 1$:
+      0000BC 85 2F E0         [24]  470 	MOV ACC, _time_sem 
+      0000BF 20 E7 FA         [24]  471 	JB ACC.7, 1$ 
+      0000C2 60 F8            [24]  472 	JZ 1$ 
+      0000C4 15 2F            [12]  473 	DEC _time_sem 
+                                    474 ;	preemptive.c:121: __endasm;
+      0000C6 75 AF 00         [24]  475 	MOV _EA, #0
+                                    476 ;	preemptive.c:122: tmp = 3 << (2 * thread_id);
+      0000C9 E5 24            [12]  477 	mov	a,_thread_id
+      0000CB 25 E0            [12]  478 	add	a,acc
+      0000CD FF               [12]  479 	mov	r7,a
+      0000CE 8F F0            [24]  480 	mov	b,r7
+      0000D0 05 F0            [12]  481 	inc	b
+      0000D2 74 03            [12]  482 	mov	a,#0x03
+      0000D4 80 02            [24]  483 	sjmp	00124$
+      0000D6                        484 00122$:
+      0000D6 25 E0            [12]  485 	add	a,acc
+      0000D8                        486 00124$:
+      0000D8 D5 F0 FB         [24]  487 	djnz	b,00122$
+      0000DB F5 28            [12]  488 	mov	_tmp,a
+                                    489 ;	preemptive.c:123: time_delay_record &= (~tmp);
+      0000DD E5 28            [12]  490 	mov	a,_tmp
+      0000DF F4               [12]  491 	cpl	a
+      0000E0 FF               [12]  492 	mov	r7,a
+      0000E1 52 2D            [12]  493 	anl	_time_delay_record,a
+                                    494 ;	preemptive.c:124: tmp = 1 << (4 + thread_id);
+      0000E3 74 04            [12]  495 	mov	a,#0x04
+      0000E5 25 24            [12]  496 	add	a,_thread_id
+      0000E7 F5 F0            [12]  497 	mov	b,a
+      0000E9 05 F0            [12]  498 	inc	b
+      0000EB 74 01            [12]  499 	mov	a,#0x01
+      0000ED 80 02            [24]  500 	sjmp	00127$
+      0000EF                        501 00125$:
+      0000EF 25 E0            [12]  502 	add	a,acc
+      0000F1                        503 00127$:
+      0000F1 D5 F0 FB         [24]  504 	djnz	b,00125$
+      0000F4 F5 28            [12]  505 	mov	_tmp,a
+                                    506 ;	preemptive.c:125: thread_bm &= (~tmp); // clear waiting
+      0000F6 E5 28            [12]  507 	mov	a,_tmp
+      0000F8 F4               [12]  508 	cpl	a
+      0000F9 FF               [12]  509 	mov	r7,a
+      0000FA 52 25            [12]  510 	anl	_thread_bm,a
+                                    511 ;	preemptive.c:126: SemaphoreSignal(time_sem);
+      0000FC 05 2F            [12]  512 	INC _time_sem 
+                                    513 ;	preemptive.c:129: __endasm;
+      0000FE 75 AF 01         [24]  514 	MOV _EA, #1
+      000101 22               [24]  515 	ret
+                                    516 ;------------------------------------------------------------
+                                    517 ;Allocation info for local variables in function 'myTimer0Handler'
+                                    518 ;------------------------------------------------------------
+                                    519 ;	preemptive.c:131: void myTimer0Handler(void)
+                                    520 ;	-----------------------------------------
+                                    521 ;	 function myTimer0Handler
+                                    522 ;	-----------------------------------------
+      000102                        523 _myTimer0Handler:
+                                    524 ;	preemptive.c:135: __endasm;
+      000102 75 AF 00         [24]  525 	MOV _EA, #0
+                                    526 ;	preemptive.c:136: SAVESTATE;
+      000105 C0 E0            [24]  527 	PUSH ACC 
+      000107 C0 F0            [24]  528 	PUSH B 
+      000109 C0 82            [24]  529 	PUSH DPL 
+      00010B C0 83            [24]  530 	PUSH DPH 
+      00010D C0 D0            [24]  531 	PUSH PSW 
+      00010F E5 24            [12]  532 	mov	a,_thread_id
+      000111 24 20            [12]  533 	add	a,#_SP_saved
+      000113 F8               [12]  534 	mov	r0,a
+      000114 A6 81            [24]  535 	mov	@r0,_SP
+                                    536 ;	preemptive.c:142: __endasm;
+      000116 75 24 00         [24]  537 	MOV _thread_id, #0
+      000119 75 D0 00         [24]  538 	MOV _PSW, #0
+                                    539 ;	preemptive.c:143: SP = SP_saved[0];
+      00011C 85 20 81         [24]  540 	mov	_SP,_SP_saved
+                                    541 ;	preemptive.c:145: RESTORESTATE;
+      00011F E5 24            [12]  542 	mov	a,_thread_id
+      000121 24 20            [12]  543 	add	a,#_SP_saved
+      000123 F9               [12]  544 	mov	r1,a
+      000124 87 81            [24]  545 	mov	_SP,@r1
+      000126 D0 D0            [24]  546 	POP PSW 
+      000128 D0 83            [24]  547 	POP DPH 
+      00012A D0 82            [24]  548 	POP DPL 
+      00012C D0 F0            [24]  549 	POP B 
+      00012E D0 E0            [24]  550 	POP ACC 
+                                    551 ;	preemptive.c:146: time_quatum++;
+      000130 05 2C            [12]  552 	inc	_time_quatum
+                                    553 ;	preemptive.c:147: time_quatum &= 3;
+      000132 53 2C 03         [24]  554 	anl	_time_quatum,#0x03
+                                    555 ;	preemptive.c:149: for(i = 1; i < MAXTHREADS; i++){ // i is the i-th thread
+      000135 75 27 01         [24]  556 	mov	_i,#0x01
+      000138                        557 00114$:
+      000138 C3               [12]  558 	clr	c
+      000139 E5 27            [12]  559 	mov	a,_i
+      00013B 64 80            [12]  560 	xrl	a,#0x80
+      00013D 94 84            [12]  561 	subb	a,#0x84
+      00013F 50 47            [24]  562 	jnc	00103$
+                                    563 ;	preemptive.c:150: tmp = time_delay_record >> (2 * i);
+      000141 C2 D5            [12]  564 	clr	F0
+      000143 75 F0 02         [24]  565 	mov	b,#0x02
+      000146 E5 27            [12]  566 	mov	a,_i
+      000148 30 E7 04         [24]  567 	jnb	acc.7,00143$
+      00014B B2 D5            [12]  568 	cpl	F0
+      00014D F4               [12]  569 	cpl	a
+      00014E 04               [12]  570 	inc	a
+      00014F                        571 00143$:
+      00014F A4               [48]  572 	mul	ab
+      000150 30 D5 0A         [24]  573 	jnb	F0,00144$
+      000153 F4               [12]  574 	cpl	a
+      000154 24 01            [12]  575 	add	a,#0x01
+      000156 C5 F0            [12]  576 	xch	a,b
+      000158 F4               [12]  577 	cpl	a
+      000159 34 00            [12]  578 	addc	a,#0x00
+      00015B C5 F0            [12]  579 	xch	a,b
+      00015D                        580 00144$:
+      00015D F5 F0            [12]  581 	mov	b,a
+      00015F 05 F0            [12]  582 	inc	b
+      000161 E5 2D            [12]  583 	mov	a,_time_delay_record
+      000163 33               [12]  584 	rlc	a
+      000164 92 D2            [24]  585 	mov	ov,c
+      000166 E5 2D            [12]  586 	mov	a,_time_delay_record
+      000168 80 03            [24]  587 	sjmp	00146$
+      00016A                        588 00145$:
+      00016A A2 D2            [12]  589 	mov	c,ov
+      00016C 13               [12]  590 	rrc	a
+      00016D                        591 00146$:
+      00016D D5 F0 FA         [24]  592 	djnz	b,00145$
+      000170 F5 28            [12]  593 	mov	_tmp,a
+                                    594 ;	preemptive.c:151: tmp &= 3;
+      000172 53 28 03         [24]  595 	anl	_tmp,#0x03
+                                    596 ;	preemptive.c:152: if(time_quatum == tmp){
+      000175 E5 28            [12]  597 	mov	a,_tmp
+      000177 B5 2C 0A         [24]  598 	cjne	a,_time_quatum,00115$
+                                    599 ;	preemptive.c:153: time_remain[i - 1]--; // its epoch to decrement
+      00017A E5 27            [12]  600 	mov	a,_i
+      00017C 14               [12]  601 	dec	a
+      00017D 24 30            [12]  602 	add	a,#_time_remain
+      00017F F9               [12]  603 	mov	r1,a
+      000180 E7               [12]  604 	mov	a,@r1
+      000181 FF               [12]  605 	mov	r7,a
+      000182 14               [12]  606 	dec	a
+      000183 F7               [12]  607 	mov	@r1,a
+      000184                        608 00115$:
+                                    609 ;	preemptive.c:149: for(i = 1; i < MAXTHREADS; i++){ // i is the i-th thread
+      000184 05 27            [12]  610 	inc	_i
+      000186 80 B0            [24]  611 	sjmp	00114$
+      000188                        612 00103$:
+                                    613 ;	preemptive.c:157: if(time_quatum == 0){
+      000188 E5 2C            [12]  614 	mov	a,_time_quatum
+      00018A 70 40            [24]  615 	jnz	00105$
+                                    616 ;	preemptive.c:158: LOG('X');
+      00018C 85 00 AF         [24]  617 	MOV _EA, 0x0 
+      00018F                        618 	 2$:
+      00018F 85*00 E0         [24]  619 	MOV ACC, _empty 
+      000192 20 E7 FA         [24]  620 	JB ACC.7, 2$ 
+      000195 60 F8            [24]  621 	JZ 2$ 
+      000197 15*00            [12]  622 	DEC _empty 
+      000199                        623 	 3$:
+      000199 85*00 E0         [24]  624 	MOV ACC, _mutex 
+      00019C 20 E7 FA         [24]  625 	JB ACC.7, 3$ 
+      00019F 60 F8            [24]  626 	JZ 3$ 
+      0001A1 15*00            [12]  627 	DEC _mutex 
+      0001A3 E5*00            [12]  628 	mov	a,_in
+      0001A5 24r00            [12]  629 	add	a,#_buff
+      0001A7 F8               [12]  630 	mov	r0,a
+      0001A8 76 58            [12]  631 	mov	@r0,#0x58
+      0001AA E5*00            [12]  632 	mov	a,_in
+      0001AC FE               [12]  633 	mov	r6,a
+      0001AD 33               [12]  634 	rlc	a
+      0001AE 95 E0            [12]  635 	subb	a,acc
+      0001B0 FF               [12]  636 	mov	r7,a
+      0001B1 8E 82            [24]  637 	mov	dpl,r6
+      0001B3 8F 83            [24]  638 	mov	dph,r7
+      0001B5 A3               [24]  639 	inc	dptr
+      0001B6 75*00 07         [24]  640 	mov	__modsint_PARM_2,#0x07
+      0001B9 75*01 00         [24]  641 	mov	(__modsint_PARM_2 + 1),#0x00
+      0001BC 12r00r00         [24]  642 	lcall	__modsint
+      0001BF AE 82            [24]  643 	mov	r6,dpl
+      0001C1 AF 83            [24]  644 	mov	r7,dph
+      0001C3 8E*00            [24]  645 	mov	_in,r6
+      0001C5 05*00            [12]  646 	INC _mutex 
+      0001C7 85 01 AF         [24]  647 	MOV _EA, 0x1 
+                                    648 ;	preemptive.c:159: time_elapsed++;
+      0001CA 05 2B            [12]  649 	inc	_time_elapsed
+      0001CC                        650 00105$:
+                                    651 ;	preemptive.c:161: if(time_quatum % 2){
+      0001CC E5 2C            [12]  652 	mov	a,_time_quatum
+      0001CE A2 E7            [12]  653 	mov	c,acc.7
+      0001D0 54 01            [12]  654 	anl	a,#0x01
+      0001D2 60 04            [24]  655 	jz	00150$
+      0001D4 50 02            [24]  656 	jnc	00150$
+      0001D6 44 FE            [12]  657 	orl	a,#0xfe
+      0001D8                        658 00150$:
+      0001D8 60 42            [24]  659 	jz	00112$
+                                    660 ;	preemptive.c:162: PRINT();
+      0001DA E5*00            [12]  661 	mov	a,_out
+      0001DC B5*00 02         [24]  662 	cjne	a,_in,00152$
+      0001DF 80 3B            [24]  663 	sjmp	00112$
+      0001E1                        664 00152$:
+      0001E1 85 00 AF         [24]  665 	MOV _EA, 0x0 
+      0001E4                        666 	 4$:
+      0001E4 85*00 E0         [24]  667 	MOV ACC, _mutex 
+      0001E7 20 E7 FA         [24]  668 	JB ACC.7, 4$ 
+      0001EA 60 F8            [24]  669 	JZ 4$ 
+      0001EC 15*00            [12]  670 	DEC _mutex 
+      0001EE E5*00            [12]  671 	mov	a,_out
+      0001F0 24r00            [12]  672 	add	a,#_buff
+      0001F2 F9               [12]  673 	mov	r1,a
+      0001F3 87 99            [24]  674 	mov	_SBUF,@r1
+      0001F5 E5*00            [12]  675 	mov	a,_out
+      0001F7 FE               [12]  676 	mov	r6,a
+      0001F8 33               [12]  677 	rlc	a
+      0001F9 95 E0            [12]  678 	subb	a,acc
+      0001FB FF               [12]  679 	mov	r7,a
+      0001FC 8E 82            [24]  680 	mov	dpl,r6
+      0001FE 8F 83            [24]  681 	mov	dph,r7
+      000200 A3               [24]  682 	inc	dptr
+      000201 75*00 07         [24]  683 	mov	__modsint_PARM_2,#0x07
+      000204 75*01 00         [24]  684 	mov	(__modsint_PARM_2 + 1),#0x00
+      000207 12r00r00         [24]  685 	lcall	__modsint
+      00020A AE 82            [24]  686 	mov	r6,dpl
+      00020C AF 83            [24]  687 	mov	r7,dph
+      00020E 8E*00            [24]  688 	mov	_out,r6
+      000210                        689 00106$:
+      000210 10 99 02         [24]  690 	jbc	_TI,00153$
+      000213 80 FB            [24]  691 	sjmp	00106$
+      000215                        692 00153$:
+      000215 05*00            [12]  693 	INC _mutex 
+      000217 05*00            [12]  694 	INC _empty 
+      000219 85 01 AF         [24]  695 	MOV _EA, 0x1 
+      00021C                        696 00112$:
+                                    697 ;	preemptive.c:167: __endasm;
+      00021C 75 AF 01         [24]  698 	MOV _EA, #1
+                                    699 ;	preemptive.c:171: __endasm;
+      00021F 32               [24]  700 	RETI
+      000220 22               [24]  701 	ret
+                                    702 ;------------------------------------------------------------
+                                    703 ;Allocation info for local variables in function 'ThreadCreate'
+                                    704 ;------------------------------------------------------------
+                                    705 ;fp                        Allocated to registers 
+                                    706 ;------------------------------------------------------------
+                                    707 ;	preemptive.c:173: ThreadID ThreadCreate(FunctionPtr fp)
+                                    708 ;	-----------------------------------------
+                                    709 ;	 function ThreadCreate
+                                    710 ;	-----------------------------------------
+      000221                        711 _ThreadCreate:
+                                    712 ;	preemptive.c:175: SemaphoreWait(thread_ct);
+      000221                        713 	 5$:
+      000221 85 26 E0         [24]  714 	MOV ACC, _thread_ct 
+      000224 20 E7 FA         [24]  715 	JB ACC.7, 5$ 
+      000227 60 F8            [24]  716 	JZ 5$ 
+      000229 15 26            [12]  717 	DEC _thread_ct 
+                                    718 ;	preemptive.c:178: __endasm;
+      00022B 75 AF 00         [24]  719 	MOV _EA, #0
+                                    720 ;	preemptive.c:180: for(i = 0; i < MAXTHREADS; i++){
+      00022E 75 27 00         [24]  721 	mov	_i,#0x00
+      000231                        722 00105$:
+      000231 C3               [12]  723 	clr	c
+      000232 E5 27            [12]  724 	mov	a,_i
+      000234 64 80            [12]  725 	xrl	a,#0x80
+      000236 94 84            [12]  726 	subb	a,#0x84
+      000238 50 75            [24]  727 	jnc	00103$
+                                    728 ;	preemptive.c:181: tmp = 1 << i;
+      00023A 85 27 F0         [24]  729 	mov	b,_i
+      00023D 05 F0            [12]  730 	inc	b
+      00023F 74 01            [12]  731 	mov	a,#0x01
+      000241 80 02            [24]  732 	sjmp	00121$
+      000243                        733 00119$:
+      000243 25 E0            [12]  734 	add	a,acc
+      000245                        735 00121$:
+      000245 D5 F0 FB         [24]  736 	djnz	b,00119$
+      000248 F5 28            [12]  737 	mov	_tmp,a
+                                    738 ;	preemptive.c:182: if( (thread_bm & tmp) == 0 ){
+      00024A E5 28            [12]  739 	mov	a,_tmp
+      00024C 55 25            [12]  740 	anl	a,_thread_bm
+      00024E 70 5A            [24]  741 	jnz	00106$
+                                    742 ;	preemptive.c:184: thread_bm |= tmp; // set the bit to 1
+      000250 E5 28            [12]  743 	mov	a,_tmp
+      000252 42 25            [12]  744 	orl	_thread_bm,a
+                                    745 ;	preemptive.c:185: tmp = SP; // save current SP
+      000254 85 81 28         [24]  746 	mov	_tmp,_SP
+                                    747 ;	preemptive.c:186: SP = (0x40 + 0x10 * i) - 1; // init SP for SP_saved
+      000257 E5 27            [12]  748 	mov	a,_i
+      000259 C4               [12]  749 	swap	a
+      00025A 54 F0            [12]  750 	anl	a,#0xF0
+      00025C FF               [12]  751 	mov	r7,a
+      00025D 24 3F            [12]  752 	add	a,#0x3F
+      00025F F5 81            [12]  753 	mov	_SP,a
+                                    754 ;	preemptive.c:187: i <<= 3;
+      000261 E5 27            [12]  755 	mov	a,_i
+      000263 C4               [12]  756 	swap	a
+      000264 03               [12]  757 	rr	a
+      000265 54 F8            [12]  758 	anl	a,#0xF8
+      000267 F5 27            [12]  759 	mov	_i,a
+                                    760 ;	preemptive.c:207: __endasm;
+      000269 E5 82            [12]  761 	MOV A, DPL
+      00026B 85 83 F0         [24]  762 	MOV B, DPH
+      00026E 90r03r58         [24]  763 	MOV DPTR, #_ThreadExit
+      000271 C0 82            [24]  764 	PUSH DPL
+      000273 C0 83            [24]  765 	PUSH DPH
+      000275 F5 82            [12]  766 	MOV DPL, A
+      000277 85 F0 83         [24]  767 	MOV DPH, B
+      00027A C0 82            [24]  768 	PUSH DPL
+      00027C C0 83            [24]  769 	PUSH DPH
+      00027E 74 00            [12]  770 	MOV A, #0
+      000280 C0 E0            [24]  771 	PUSH ACC
+      000282 C0 E0            [24]  772 	PUSH ACC
+      000284 C0 E0            [24]  773 	PUSH ACC
+      000286 C0 E0            [24]  774 	PUSH ACC
+      000288 C0 27            [24]  775 	PUSH _i
+      00028A 74 00            [12]  776 	MOV A, #0x00
+                                    777 ;	preemptive.c:208: i >>= 3;
+      00028C E5 27            [12]  778 	mov	a,_i
+      00028E C4               [12]  779 	swap	a
+      00028F 23               [12]  780 	rl	a
+      000290 54 1F            [12]  781 	anl	a,#0x1F
+      000292 30 E4 02         [24]  782 	jnb	acc.4,00123$
+      000295 44 E0            [12]  783 	orl	a,#0xE0
+      000297                        784 00123$:
+      000297 F5 27            [12]  785 	mov	_i,a
+                                    786 ;	preemptive.c:209: SP_saved[i] = SP; // save SP for that thread
+      000299 E5 27            [12]  787 	mov	a,_i
+      00029B 24 20            [12]  788 	add	a,#_SP_saved
+      00029D F8               [12]  789 	mov	r0,a
+      00029E A6 81            [24]  790 	mov	@r0,_SP
+                                    791 ;	preemptive.c:211: SP = tmp; // restore SP
+      0002A0 85 28 81         [24]  792 	mov	_SP,_tmp
+                                    793 ;	preemptive.c:214: __endasm;
+      0002A3 75 AF 00         [24]  794 	MOV _EA, #0
+                                    795 ;	preemptive.c:215: return i;
+      0002A6 85 27 82         [24]  796 	mov	dpl,_i
+      0002A9 22               [24]  797 	ret
+      0002AA                        798 00106$:
+                                    799 ;	preemptive.c:180: for(i = 0; i < MAXTHREADS; i++){
+      0002AA 05 27            [12]  800 	inc	_i
+      0002AC 02r02r31         [24]  801 	ljmp	00105$
+      0002AF                        802 00103$:
+                                    803 ;	preemptive.c:220: __endasm;
+      0002AF 75 AF 01         [24]  804 	MOV _EA, #1
+                                    805 ;	preemptive.c:222: return -1;
+      0002B2 75 82 FF         [24]  806 	mov	dpl,#0xFF
+      0002B5 22               [24]  807 	ret
+                                    808 ;------------------------------------------------------------
+                                    809 ;Allocation info for local variables in function 'ThreadYield'
+                                    810 ;------------------------------------------------------------
+                                    811 ;	preemptive.c:224: void ThreadYield(void)
+                                    812 ;	-----------------------------------------
+                                    813 ;	 function ThreadYield
+                                    814 ;	-----------------------------------------
+      0002B6                        815 _ThreadYield:
+                                    816 ;	preemptive.c:228: __endasm;
+      0002B6 75 AF 00         [24]  817 	MOV _EA, #0
+                                    818 ;	preemptive.c:229: SAVESTATE;
+      0002B9 C0 E0            [24]  819 	PUSH ACC 
+      0002BB C0 F0            [24]  820 	PUSH B 
+      0002BD C0 82            [24]  821 	PUSH DPL 
+      0002BF C0 83            [24]  822 	PUSH DPH 
+      0002C1 C0 D0            [24]  823 	PUSH PSW 
+      0002C3 E5 24            [12]  824 	mov	a,_thread_id
+      0002C5 24 20            [12]  825 	add	a,#_SP_saved
+      0002C7 F8               [12]  826 	mov	r0,a
+      0002C8 A6 81            [24]  827 	mov	@r0,_SP
+                                    828 ;	preemptive.c:230: for(i = 1; i <= MAXTHREADS; i++){ // start from next thread
+      0002CA 75 27 01         [24]  829 	mov	_i,#0x01
+      0002CD                        830 00109$:
+      0002CD C3               [12]  831 	clr	c
+      0002CE 74 84            [12]  832 	mov	a,#(0x04 ^ 0x80)
+      0002D0 85 27 F0         [24]  833 	mov	b,_i
+      0002D3 63 F0 80         [24]  834 	xrl	b,#0x80
+      0002D6 95 F0            [12]  835 	subb	a,b
+      0002D8 40 2E            [24]  836 	jc	00103$
+                                    837 ;	preemptive.c:231: tmp = last_thread + i;
+      0002DA E5 27            [12]  838 	mov	a,_i
+      0002DC 25 2A            [12]  839 	add	a,_last_thread
+      0002DE F5 28            [12]  840 	mov	_tmp,a
+                                    841 ;	preemptive.c:232: tmp &= 3;
+      0002E0 53 28 03         [24]  842 	anl	_tmp,#0x03
+                                    843 ;	preemptive.c:233: tmp = 1 << tmp;
+      0002E3 85 28 F0         [24]  844 	mov	b,_tmp
+      0002E6 05 F0            [12]  845 	inc	b
+      0002E8 74 01            [12]  846 	mov	a,#0x01
+      0002EA 80 02            [24]  847 	sjmp	00140$
+      0002EC                        848 00138$:
+      0002EC 25 E0            [12]  849 	add	a,acc
+      0002EE                        850 00140$:
+      0002EE D5 F0 FB         [24]  851 	djnz	b,00138$
+      0002F1 F5 28            [12]  852 	mov	_tmp,a
+                                    853 ;	preemptive.c:234: if(thread_bm & tmp){ // next thread found
+      0002F3 E5 28            [12]  854 	mov	a,_tmp
+      0002F5 55 25            [12]  855 	anl	a,_thread_bm
+      0002F7 60 0B            [24]  856 	jz	00110$
+                                    857 ;	preemptive.c:235: last_thread += i;
+      0002F9 E5 27            [12]  858 	mov	a,_i
+      0002FB 25 2A            [12]  859 	add	a,_last_thread
+      0002FD F5 2A            [12]  860 	mov	_last_thread,a
+                                    861 ;	preemptive.c:236: last_thread &= 3;
+      0002FF 53 2A 03         [24]  862 	anl	_last_thread,#0x03
+                                    863 ;	preemptive.c:237: break;
+      000302 80 04            [24]  864 	sjmp	00103$
+      000304                        865 00110$:
+                                    866 ;	preemptive.c:230: for(i = 1; i <= MAXTHREADS; i++){ // start from next thread
+      000304 05 27            [12]  867 	inc	_i
+      000306 80 C5            [24]  868 	sjmp	00109$
+      000308                        869 00103$:
+                                    870 ;	preemptive.c:242: for(i = 1; i < MAXTHREADS; i++){ // search for thread that finishes its delay
+      000308 75 27 01         [24]  871 	mov	_i,#0x01
+      00030B                        872 00112$:
+      00030B C3               [12]  873 	clr	c
+      00030C E5 27            [12]  874 	mov	a,_i
+      00030E 64 80            [12]  875 	xrl	a,#0x80
+      000310 94 84            [12]  876 	subb	a,#0x84
+      000312 50 2B            [24]  877 	jnc	00107$
+                                    878 ;	preemptive.c:243: tmp = 1 << (4 + i);
+      000314 74 04            [12]  879 	mov	a,#0x04
+      000316 25 27            [12]  880 	add	a,_i
+      000318 F5 F0            [12]  881 	mov	b,a
+      00031A 05 F0            [12]  882 	inc	b
+      00031C 74 01            [12]  883 	mov	a,#0x01
+      00031E 80 02            [24]  884 	sjmp	00145$
+      000320                        885 00143$:
+      000320 25 E0            [12]  886 	add	a,acc
+      000322                        887 00145$:
+      000322 D5 F0 FB         [24]  888 	djnz	b,00143$
+      000325 F5 28            [12]  889 	mov	_tmp,a
+                                    890 ;	preemptive.c:244: if((tmp & (0xF0)) && !time_remain[i - 1]){
+      000327 E5 28            [12]  891 	mov	a,_tmp
+      000329 54 F0            [12]  892 	anl	a,#0xF0
+      00032B 60 0E            [24]  893 	jz	00113$
+      00032D E5 27            [12]  894 	mov	a,_i
+      00032F 14               [12]  895 	dec	a
+      000330 24 30            [12]  896 	add	a,#_time_remain
+      000332 F9               [12]  897 	mov	r1,a
+      000333 E7               [12]  898 	mov	a,@r1
+      000334 70 05            [24]  899 	jnz	00113$
+                                    900 ;	preemptive.c:245: last_thread = i;
+      000336 85 27 2A         [24]  901 	mov	_last_thread,_i
+                                    902 ;	preemptive.c:246: break;  
+      000339 80 04            [24]  903 	sjmp	00107$
+      00033B                        904 00113$:
+                                    905 ;	preemptive.c:242: for(i = 1; i < MAXTHREADS; i++){ // search for thread that finishes its delay
+      00033B 05 27            [12]  906 	inc	_i
+      00033D 80 CC            [24]  907 	sjmp	00112$
+      00033F                        908 00107$:
+                                    909 ;	preemptive.c:251: thread_id = last_thread;
+      00033F 85 2A 24         [24]  910 	mov	_thread_id,_last_thread
+                                    911 ;	preemptive.c:252: RESTORESTATE;
+      000342 E5 24            [12]  912 	mov	a,_thread_id
+      000344 24 20            [12]  913 	add	a,#_SP_saved
+      000346 F9               [12]  914 	mov	r1,a
+      000347 87 81            [24]  915 	mov	_SP,@r1
+      000349 D0 D0            [24]  916 	POP PSW 
+      00034B D0 83            [24]  917 	POP DPH 
+      00034D D0 82            [24]  918 	POP DPL 
+      00034F D0 F0            [24]  919 	POP B 
+      000351 D0 E0            [24]  920 	POP ACC 
+                                    921 ;	preemptive.c:257: __endasm;
+      000353 75 AF 01         [24]  922 	MOV _EA, #1
+      000356 32               [24]  923 	RETI
+      000357 22               [24]  924 	ret
+                                    925 ;------------------------------------------------------------
+                                    926 ;Allocation info for local variables in function 'ThreadExit'
+                                    927 ;------------------------------------------------------------
+                                    928 ;	preemptive.c:259: void ThreadExit(void)
+                                    929 ;	-----------------------------------------
+                                    930 ;	 function ThreadExit
+                                    931 ;	-----------------------------------------
+      000358                        932 _ThreadExit:
+                                    933 ;	preemptive.c:263: __endasm;
+      000358 75 AF 00         [24]  934 	MOV _EA, #0
+                                    935 ;	preemptive.c:265: tmp = 1 << thread_id;
+      00035B 85 24 F0         [24]  936 	mov	b,_thread_id
+      00035E 05 F0            [12]  937 	inc	b
+      000360 74 01            [12]  938 	mov	a,#0x01
+      000362 80 02            [24]  939 	sjmp	00111$
+      000364                        940 00109$:
+      000364 25 E0            [12]  941 	add	a,acc
+      000366                        942 00111$:
+      000366 D5 F0 FB         [24]  943 	djnz	b,00109$
+      000369 F5 28            [12]  944 	mov	_tmp,a
+                                    945 ;	preemptive.c:266: thread_bm &= (~tmp); // clear bitmap
+      00036B E5 28            [12]  946 	mov	a,_tmp
+      00036D F4               [12]  947 	cpl	a
+      00036E FF               [12]  948 	mov	r7,a
+      00036F 52 25            [12]  949 	anl	_thread_bm,a
+                                    950 ;	preemptive.c:268: SemaphoreSignal(thread_ct);
+      000371 05 26            [12]  951 	INC _thread_ct 
+                                    952 ;	preemptive.c:271: __endasm;
+      000373 75 AF 01         [24]  953 	MOV _EA, #1
+                                    954 ;	preemptive.c:272: while(1) {} // wait for context switch
+      000376                        955 00102$:
+      000376 80 FE            [24]  956 	sjmp	00102$
+                                    957 ;------------------------------------------------------------
+                                    958 ;Allocation info for local variables in function 'now'
+                                    959 ;------------------------------------------------------------
+                                    960 ;	preemptive.c:274: unsigned char now()
+                                    961 ;	-----------------------------------------
+                                    962 ;	 function now
+                                    963 ;	-----------------------------------------
+      000378                        964 _now:
+                                    965 ;	preemptive.c:276: return time_quatum >= 2 ? time_elapsed + 1 : time_elapsed;
+      000378 C3               [12]  966 	clr	c
+      000379 E5 2C            [12]  967 	mov	a,_time_quatum
+      00037B 64 80            [12]  968 	xrl	a,#0x80
+      00037D 94 82            [12]  969 	subb	a,#0x82
+      00037F 40 06            [24]  970 	jc	00103$
+      000381 E5 2B            [12]  971 	mov	a,_time_elapsed
+      000383 04               [12]  972 	inc	a
+      000384 FF               [12]  973 	mov	r7,a
+      000385 80 02            [24]  974 	sjmp	00104$
+      000387                        975 00103$:
+      000387 AF 2B            [24]  976 	mov	r7,_time_elapsed
+      000389                        977 00104$:
+      000389 8F 82            [24]  978 	mov	dpl,r7
+      00038B 22               [24]  979 	ret
+                                    980 	.area CSEG    (CODE)
+                                    981 	.area CONST   (CODE)
+                                    982 	.area XINIT   (CODE)
+                                    983 	.area CABS    (ABS,CODE)
